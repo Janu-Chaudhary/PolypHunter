@@ -29,6 +29,8 @@ These rules keep one shared repo clean while four people work on it. The full ru
 - Never commit datasets, model weights (`*.pt`, `weights/`), API keys or `kaggle.json` / `access_token`.
 - Results committed to `results/` must come from a full Kaggle run (`SMOKE = False`), with the Kaggle
   version noted in the PR. Smoke runs write to `results_smoke/`, which is ignored.
+- Every results PR includes the Kaggle log of each run it used, converted with
+  `python3 tools/kaggle_log_to_text.py <file>.log logs/<notebook>_v<N>.txt`.
 - The random seed (42) and the split (`results/split.json`) are fixed so numbers stay comparable.
 
 ## Ownership
