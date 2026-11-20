@@ -1,0 +1,46 @@
+[     6.7s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     6.7s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     6.7s stderr] 0.00s - to python to disable frozen modules.
+[     6.7s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[     7.3s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     7.3s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     7.3s stderr] 0.00s - to python to disable frozen modules.
+[     7.3s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[    26.5s stdout] torch 2.11.0+cu130 | smp 0.6.0 | device Tesla T4 | SMOKE True
+[    28.5s stdout] 1000 images | train 32 | val 16 | test 16
+[    29.0s stdout] 196 sessile (flat) polyp ids found
+[   101.0s stdout] CVC-ClinicDB: 612 images from /kaggle/input/datasets/balraj98/cvcclinicdb/PNG/Original
+[   107.9s stdout] [unet_scratch] ep   1/1 loss 1.4444 val dice 0.0019 iou 0.0010 (best 0.0019)
+[   107.9s stdout] [unet_scratch] done in 0.1 min
+[   111.7s stdout] {
+[   111.7s stdout]  "model": "unet_scratch",
+[   111.7s stdout]  "dice": 0.002,
+[   111.7s stdout]  "iou": 0.001,
+[   111.7s stdout]  "precision": 0.3283,
+[   111.7s stdout]  "recall": 0.001,
+[   111.7s stdout]  "thr_val": 0.2,
+[   111.7s stdout]  "dice_tuned": 0.3223,
+[   111.7s stdout]  "iou_tuned": 0.2178,
+[   111.7s stdout]  "dice_tta": 0.0,
+[   111.7s stdout]  "iou_tta": 0.0,
+[   111.7s stdout]  "cvc_dice": 0.003,
+[   111.7s stdout]  "cvc_iou": 0.0015,
+[   111.7s stdout]  "params_M": 31.0376,
+[   111.7s stdout]  "fps_fp32": 13.8184,
+[   111.7s stdout]  "fps_fp16": 55.6467,
+[   111.7s stdout]  "fps_fp16_tta": 17.6906,
+[   111.7s stdout]  "train_min": 0.1049,
+[   111.7s stdout]  "epochs": 1,
+[   111.7s stdout]  "lr": 0.0003,
+[   111.7s stdout]  "gpu": "Tesla T4",
+[   111.7s stdout]  "smoke": true
+[   111.7s stdout] }
+[   112.6s stdout] saved /kaggle/working/figures/dataset_samples.png
+[   118.1s stderr] /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+[   118.1s stderr]   cells[i][c] = re.sub('\\\\\|', '|', cell)
+[   118.2s stderr] /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+[   118.2s stderr]   text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[   118.9s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+[   119.0s stderr] [NbConvertApp] Writing 38745 bytes to __notebook__.ipynb
+[   121.5s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to html
+[   122.1s stderr] [NbConvertApp] Writing 413528 bytes to __results__.html
