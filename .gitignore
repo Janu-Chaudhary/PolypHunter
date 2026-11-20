@@ -1,0 +1,10 @@
+build/
+kaggle_smoke/
+smoke_out/
+results/weights/
+*.pt
+__pycache__/
+.ipynb_checkpoints/
+data/
+kaggle.json
+access_token
