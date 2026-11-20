@@ -44,6 +44,10 @@ from every notebook. For each model, `results/<model>/` contains:
 
 Weights go to `weights/` and are **never committed**.
 
+Every Kaggle run also leaves a full log (epoch-by-epoch training, warnings, timings, final metrics). It is
+committed as readable text to `logs/<notebook>_v<N>.txt` (smoke runs: `logs/<notebook>_smoke_v<N>.txt`), so
+anyone can check how a result was produced without access to the owner's Kaggle account.
+
 ## Timeline (IST)
 | When | What |
 |---|---|
@@ -76,10 +80,18 @@ Weights go to `weights/` and are **never committed**.
    Progress is under **Versions**.
 6. When the status is **Complete**: open that version → **Output** → **Download All**. Copy `results/` and
    `figures/` into your clone. Do **not** copy `weights/`.
-7. Commit and open the PR:
+7. Save the run log: on the version page open the **Logs** tab → **Download** (the `.log` file), then convert it:
    ```bash
-   git add results/<your models> results/split.json results/test_attributes.csv figures/<your figures> report/sections/<your files>
-   git commit -m "Add <model> results from Kaggle run v<N>"
+   python3 tools/kaggle_log_to_text.py <downloaded .log> logs/0X_<name>_v<N>.txt
+   ```
+   Do the same for a smoke run you used (`logs/0X_<name>_smoke_v<N>.txt`). With the command line,
+   `kaggle kernels output <user>/<notebook> -p build/out` downloads the `.log` next to the outputs.
+8. Commit and open the PR:
+   ```bash
+   git add results/<your models> results/split.json results/test_attributes.csv figures/<your figures> logs/<your logs>
+   git commit -m "Add <model> results and Kaggle log from run v<N>"
+   git add report/sections/<your files>
+   git commit -m "Write <section> section"
    git push -u origin feat/<issue#>-<topic>
    ```
    Open the PR on GitHub with `Closes #<issue#>`, fill in the template (including the Kaggle version), and

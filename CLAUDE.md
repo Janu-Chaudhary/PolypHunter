@@ -49,6 +49,7 @@ Deliverables: the project report and this repository. Deadline: Sun 22 Nov 2026.
 - `notebooks/`: notebooks generated from `src/`; `common.py` is inlined so Kaggle needs no extra files.
 - `results/<model>/`: the output format every training notebook writes (see `docs/WORK_PLAN.md`).
 - `figures/`: figures used in the report.
+- `logs/`: the Kaggle log of every run behind a committed result, as text (`tools/kaggle_log_to_text.py`).
 - `report/sections/`: one Markdown file per report section; `report/REPORT.md` is the assembled report.
 - `docs/WORK_PLAN.md`: roles, flow, timeline and step-by-step instructions.
-- `tools/`: notebook builder, Kaggle launcher, fake-results generator.
+- `tools/`: notebook builder, Kaggle launcher, fake-results generator, Kaggle log converter.
