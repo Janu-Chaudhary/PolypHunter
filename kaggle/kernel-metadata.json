@@ -1,5 +1,0 @@
-{"id": "januchaudhary/p13-polyp-segmentation", "title": "P13 Polyp Segmentation",
- "code_file": "../notebooks/p13_polyp_segmentation.ipynb", "language": "python", "kernel_type": "notebook", "is_private": true,
- "enable_gpu": true, "enable_internet": true, "machine_shape": "NvidiaTeslaT4",
- "dataset_sources": ["debeshjha1/kvasirseg", "debeshjha1/kvasirsessile", "balraj98/cvcclinicdb"],
- "competition_sources": [], "kernel_sources": []}
