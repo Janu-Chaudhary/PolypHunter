@@ -8,3 +8,7 @@ __pycache__/
 data/
 kaggle.json
 access_token
+.claude/worktrees/
+results/_fake/
+results_smoke/
+weights/
