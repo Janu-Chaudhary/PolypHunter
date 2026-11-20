@@ -180,6 +180,9 @@ def overlay(img, m, color):
 found = find_kvasir_images()
 if found is None:
     print("Kvasir-SEG images not found: galleries skipped (attach the dataset on Kaggle or unzip it under data/)")
+elif not glob.glob(os.path.join(found[0], DF["name"].iloc[0] + ".*")):
+    # fake results use invented names (fake_000, ...), which have no matching image in the real dataset
+    print("test image names not in the dataset (fake results?): galleries skipped")
 else:
     probs = {}
     for m in MODELS:
