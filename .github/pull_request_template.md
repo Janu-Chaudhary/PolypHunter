@@ -1,10 +1,17 @@
+Closes #
+
 ## What does this PR change?
 
 ## Why?
 
+## Kaggle run used
+<!-- Notebook link and version number, for example https://www.kaggle.com/code/<user>/<notebook> v3. Write "none" if no run. -->
+Kaggle version:
+
 ## Checklist
-- [ ] Edited `src/*.py` (not the `.ipynb` by hand) and regenerated the notebook
-- [ ] Ran a smoke test (`tools/run_on_kaggle.sh smoke`) or explained why not
+- [ ] Edited `src/` (not the `.ipynb` by hand) and rebuilt the notebooks with `python3 tools/make_notebook.py`
+- [ ] Ran a smoke run (`SMOKE = True`) or explained why not
+- [ ] Results (if any) come from a full run (`SMOKE = False`) and follow the output format in `docs/WORK_PLAN.md`
 - [ ] No datasets, weights, API keys or tokens committed
-- [ ] Results (if any) come from a full run — Kaggle version: `v__`
-- [ ] README / report updated if behaviour or numbers changed
+- [ ] No AI or tool attribution lines in commits or in this description
+- [ ] Report section / README updated if numbers or behaviour changed
