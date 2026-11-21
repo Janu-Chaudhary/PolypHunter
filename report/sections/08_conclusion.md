@@ -1,25 +1,30 @@
 # 8. Conclusion and limitations
 
-<!-- Owner: Manoj (#6). `__` = waiting for the results of #4 and #5. -->
+<!-- Owner: Manoj (#6). `__` = waiting for the results of #4 (Trivedh). -->
 
 ## 8.1 Conclusion
 We compared five U-Net variants for polyp segmentation on Kvasir-SEG, all trained and evaluated with the same
 split, augmentation, loss and code. The U-Net trained from scratch is already a strong baseline (Dice 0.851,
-IoU 0.774). __ (What each step of the brief added: pretrained encoder +__, attention gates +__, transformer
-encoder +__.)
+IoU 0.774). Adding attention gates changed nothing measurable (+0.003 Dice, p = 0.73), while replacing the encoder
+with SegFormer's pretrained transformer gave a clear, significant gain (+0.066 Dice, to 0.917).
+__ (Pretrained CNN encoders: ResNet-34 +__, MobileNetV2 +__.)
 
-**Which model to deploy.** __ (Recommend one model and justify it with three numbers: its Dice, its frames per
-second at batch 1 compared with the 25 FPS needed for live video, and its miss rate on small polyps. If the most
-accurate model is too slow, say which model is the best compromise.)
+**Which model to deploy.** SegFormer (MiT-B2), on the current results. It is the most accurate model (Dice 0.917),
+it runs at 43 frames per second on a T4 GPU at batch size 1, comfortably above the 25 frames per second of live
+colonoscopy video, and it misses the fewest small polyps (7.4%, against 18.5% for the baseline). It is also the
+only model that stays above 25 frames per second with test-time augmentation (33 frames per second, Dice 0.926).
+__ (Confirm once ResNet-34 and MobileNetV2 are in: if one of them is within the confidence interval of SegFormer
+and much faster, discuss it as the alternative for weaker hardware.)
 
 **Where models still fail.** Small polyps (under 5% of the image) and flat (sessile) polyps are the hardest cases
-for every model we trained, and these are exactly the polyps that doctors miss most often. For the baseline, all
-complete misses in the test set were small polyps, most of them also sessile. __ (Did better models reduce the
-miss rate on these polyps?) A segmentation model can support a doctor, but it does not yet remove the need for a
-careful look at small, flat lesions.
+for every model we trained, and these are exactly the polyps that doctors miss most often. For both models trained
+from scratch, every complete miss in the test set was a small polyp, most of them also sessile. SegFormer reduces
+these failures most: it misses 1 of the 18 small sessile polyps, against 4 for the baseline. A segmentation model
+can support a doctor, but it does not yet remove the need for a careful look at small, flat lesions.
 
-**Generalisation.** On CVC-ClinicDB, images from another hospital, the baseline lost 0.101 Dice without retraining.
-__ (Which model transferred best.)
+**Generalisation.** On CVC-ClinicDB, images from another hospital, the models trained from scratch lost about
+0.1 Dice without retraining (baseline 0.101, Attention U-Net 0.113). SegFormer lost only 0.054 and still reached
+0.863, so it also transferred best to new equipment. __ (ResNet-34 and MobileNetV2.)
 
 ## 8.2 Limitations
 - **Small test set.** 120 test images give reasonably stable overall means, but the failure-analysis groups hold

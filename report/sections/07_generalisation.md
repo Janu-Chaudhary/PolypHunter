@@ -16,16 +16,25 @@ threshold is 0.5.
 | U-Net (scratch) | 0.851 | 0.750 | 0.655 | 0.101 |
 | U-Net + ResNet-34 | __ | __ | __ | __ |
 | U-Net + MobileNetV2 | __ | __ | __ | __ |
-| Attention U-Net | __ | __ | __ | __ |
-| SegFormer (MiT-B2) | __ | __ | __ | __ |
+| Attention U-Net | 0.854 | 0.741 | 0.646 | 0.113 |
+| SegFormer (MiT-B2) | 0.917 | 0.863 | 0.787 | 0.054 |
 
-**Baseline.** The U-Net trained from scratch loses 0.101 Dice on the new hospital's images (0.851 → 0.750).
-It still finds most polyps, but a tenth of its overlap is lost, which shows that it has partly learned features
-specific to Kvasir-SEG's camera and image style.
+**Models trained from scratch.** The baseline loses 0.101 Dice on the new hospital's images (0.851 → 0.750). It
+still finds most polyps, but a tenth of its overlap is lost, which shows that it has partly learned features
+specific to Kvasir-SEG's camera and image style. The Attention U-Net loses slightly more (0.113) and ends up a
+little below the baseline on CVC (0.741 against 0.750): the attention gates do not make the model more robust
+to a new hospital either.
 
-__ (For the other models: do the ImageNet-pretrained encoders lose less, as one would expect from features learned
-on a million varied photos? Does SegFormer's global self-attention generalise better than convolutions? Rank the
-models by CVC Dice, and note whether that ranking differs from the Kvasir ranking.)
+**SegFormer.** SegFormer loses only 0.054 Dice, about half as much as the two models trained from scratch, and
+keeps a Dice of 0.863 on CVC-ClinicDB. Its lead over the baseline grows from 0.066 on Kvasir-SEG to 0.113 on
+CVC-ClinicDB. Two of its properties may explain this, though our experiment cannot separate them: its encoder was
+pretrained on ImageNet, so it starts from features learned on over a million varied photographs rather than on
+800 colonoscopy images; and its self-attention relates every part of the image to every other part, which may make
+it rely less on local colour and texture that change between cameras.
+__ (ResNet-34 and MobileNetV2 are also ImageNet-pretrained but are CNNs: if they also lose little, pretraining is
+the main reason; if they lose as much as the baseline, the transformer encoder is.)
+
+The ranking on CVC-ClinicDB is the same as on Kvasir-SEG for these three models. __ (Check with all five.)
 
 **Caveats.**
 - CVC-ClinicDB frames come from only 29 videos, so neighbouring frames are very similar and the 612 frames are
