@@ -30,7 +30,8 @@ models by CVC Dice, and note whether that ranking differs from the Kvasir rankin
 **Caveats.**
 - CVC-ClinicDB frames come from only 29 videos, so neighbouring frames are very similar and the 612 frames are
   far from 612 independent cases.
-- Its images are smaller (384×288) than most Kvasir-SEG images and are upscaled to 352×352, which changes the
-  apparent sharpness.
+- Its images are smaller (384×288) than most Kvasir-SEG images and wider than they are tall. Resizing them to
+  352×352 stretches them vertically and changes their apparent sharpness, so polyps look slightly different
+  from those the models were trained on.
 - We use no CVC image for training or for choosing anything, so these numbers are a fair test of transfer, but a
   single seed means differences of about 0.01 should not be over-interpreted.

@@ -24,8 +24,9 @@ __ (Which model transferred best.)
 ## 8.2 Limitations
 - **Small test set.** 120 test images give reasonably stable overall means, but the failure-analysis groups hold
   only 9–89 images, so differences of a few hundredths between models or groups may be noise.
-- **One random seed.** Every model was trained once. Differences between models smaller than about 0.01 Dice
-  could change with another seed, and we report no confidence intervals.
+- **One random seed.** Every model was trained once. Our bootstrap intervals (Section 4.2) show how much the
+  results depend on which images are in the test set, but not how much they would change if the same model were
+  trained again with another seed; small differences between models could change with another seed.
 - **Contrast is a stand-in.** Our "low contrast" group comes from a colour measure we computed, not from expert
   labels. Only the sessile/flat label comes from experts (Kvasir-Sessile).
 - **One resolution, one dataset for training.** All models see 352×352 images, which may erase the smallest polyps;
@@ -35,7 +36,7 @@ __ (Which model transferred best.)
 
 ## 8.3 Future work
 - Train at a higher resolution, or crop around candidate regions, to help with small polyps.
-- Repeat every run with several seeds and report the mean and spread.
+- Repeat every run with several seeds and report the mean and spread, so the intervals also cover training randomness.
 - Add CVC-ClinicDB or other centres to the training data, and evaluate on video sequences.
 
 ## References
@@ -49,3 +50,4 @@ __ (Which model transferred best.)
 7. H. Sung et al. Global Cancer Statistics 2020: GLOBOCAN Estimates of Incidence and Mortality Worldwide for 36 Cancers in 185 Countries. CA: A Cancer Journal for Clinicians, 2021.
 8. S. Zhao et al. Magnitude, Risk Factors, and Factors Associated With Adenoma Miss Rate of Tandem Colonoscopy: A Systematic Review and Meta-analysis. Gastroenterology, 2019.
 9. D. A. Corley et al. Adenoma Detection Rate and Risk of Colorectal Cancer and Death. New England Journal of Medicine, 2014.
+10. B. Efron, R. J. Tibshirani. An Introduction to the Bootstrap. Chapman & Hall/CRC, 1993.

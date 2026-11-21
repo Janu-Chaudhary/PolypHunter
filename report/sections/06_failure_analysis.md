@@ -12,8 +12,8 @@ and check whether the models fail on the same polyps that doctors do.
   Small < 5%, medium 5–20%, large > 20%.
 - **Morphology:** a test image is **sessile/flat** if it is listed in Kvasir-Sessile (Jha et al., 2021), a set of
   196 Kvasir-SEG polyps that experts labelled sessile and smaller than 10 mm. This is a real expert label.
-- **Contrast:** the colour difference (ΔE in CIELAB colour space) between the polyp and a ring of tissue about
-  12 pixels wide around it. The test set is split into thirds: low, mid and high contrast. A low value means the
+- **Contrast:** the colour difference (ΔE in CIELAB colour space) between the polyp and a ring of tissue
+  12 pixels wide around it, measured on the 352×352 image. The test set is split into thirds: low, mid and high contrast. A low value means the
   polyp blends into the colon wall. This is only a **stand-in** for "hard to see", computed by us, not an expert label.
 - **Miss rate:** the share of images with Dice < 0.5, meaning the polyp was essentially not found. A missed polyp
   is clinically worse than a slightly wrong outline, so we report it next to the mean Dice.
@@ -57,7 +57,7 @@ because Kvasir-Sessile only contains polyps under 10 mm. Separating the two fact
 | **Sessile/flat** | 0.840 (13) | 0.657 (18) |
 
 Both factors lower the Dice on their own, and polyps that are both small and flat are by far the hardest
-(0.657). With only 9 and 13 images in two of the cells, this split is indicative only.
+(0.657); the baseline misses 4 of these 18 polyps (22%). With only 9 and 13 images in two of the cells, this split is indicative only.
 
 **Contrast matters less than size.** Low- and mid-contrast polyps score about 0.83, high-contrast ones 0.89.
 The effect is smaller than for size, and low and mid contrast are not clearly different. Sessile polyps do have
