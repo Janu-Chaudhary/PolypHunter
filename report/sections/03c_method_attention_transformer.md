@@ -66,8 +66,9 @@ Dice barely changes.
 
 ### Encoder: hierarchical transformer
 SegFormer (Xie et al., 2021) replaces the convolutional encoder with a **Mix Transformer (MiT-B2)**.
-- The image is cut into **overlapping patches** (a strided convolution), so neighbouring patches share pixels
-  and no positional embedding is needed.
+- The image is cut into **overlapping patches** (a strided convolution), so neighbouring patches share pixels.
+  Positional information comes from **Mix-FFN**, a 3×3 depthwise convolution inside each feed-forward layer,
+  so no positional embedding is needed and the model works at any input size.
 - Each transformer block applies **self-attention**: every patch compares itself with every other patch and
   takes a weighted average of them. Every location can therefore use the **whole image as context**, while a
   CNN only sees a local window that grows slowly with depth. To keep this affordable at high resolution,
@@ -78,8 +79,9 @@ SegFormer (Xie et al., 2021) replaces the convolutional encoder with a **Mix Tra
 ### Decoder: all-MLP
 The decoder is deliberately light. Each of the four feature maps is projected to the same number of channels
 by an MLP (a 1×1 convolution), upsampled to 1/4 resolution, concatenated, fused by one more MLP, and mapped to
-one logit per pixel. The prediction is made at **88×88** and **bilinearly upsampled** to 352×352 (our `Resize`
-wrapper) before the loss and metrics.
+one logit per pixel. The prediction is made at **88×88**, and the segmentation head **bilinearly upsamples** it
+×4 to 352×352 before the loss and metrics. (Our `Resize` wrapper would resize any other output to the input
+size, but here it is only a safety net and never changes the output.)
 
 ### Training setup
 - Encoder initialised with **ImageNet-pretrained** MiT-B2 weights (`segmentation-models-pytorch` 0.6.0).
@@ -114,11 +116,17 @@ The test set must stay unseen until the final evaluation.
 | Model | Best threshold (val) | Test Dice at 0.5 | Test Dice tuned | Gain |
 |---|---|---|---|---|
 | U-Net baseline | 0.50 | 0.851 | 0.851 | 0.000 |
-| Attention U-Net | 0.55 | 0.854 | 0.854 | +0.001 |
-| SegFormer MiT-B2 | 0.60 | 0.917 | 0.918 | +0.001 |
+| Attention U-Net | 0.55 | 0.854 | 0.854 | +0.0007 |
+| SegFormer MiT-B2 | 0.60 | 0.917 | 0.918 | +0.0008 |
 
 Both curves in `figures/threshold_curve.png` are **flat around 0.5**: between 0.4 and 0.7, validation Dice
-changes by about 0.001 for the Attention U-Net and 0.003 for SegFormer. The chosen thresholds sit just above 0.5, so the models are slightly better when
-they mark a pixel as polyp only when they are a little more confident. The gain is **below 0.001 Dice**.
-Threshold tuning is therefore not a meaningful source of improvement here. It shows instead that the models'
-probabilities are already **well calibrated** around 0.5, which makes the default threshold a safe choice.
+varies by only 0.0015 for the Attention U-Net and 0.0034 for SegFormer. The chosen thresholds sit just above
+0.5, so the models are slightly better when they mark a pixel as polyp only when they are a little more
+confident. The gain is **about +0.001 Dice (+0.0007 and +0.0008)**, so threshold tuning is not a meaningful
+source of improvement here.
+
+The flat curves show instead that the models' predictions are **confident (sharp)**: most pixels are
+predicted close to 0 or 1. On the test set, only **3.0%** (Attention U-Net) and **2.2%** (SegFormer) of
+pixels have a probability between 0.2 and 0.8, so moving the threshold changes very few of them, and the
+default of 0.5 is a safe choice. This is not the same as *calibration*, which would mean that pixels
+predicted at, say, 0.8 are polyp 80% of the time. We did not measure calibration.
