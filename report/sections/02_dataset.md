@@ -8,8 +8,8 @@ Image sizes vary from 332×487 to 1920×1072 pixels. Every image contains at lea
 strongly in size, shape, colour and texture, which makes the dataset a realistic test of segmentation models.
 
 Figure 2.1 (`figures/dataset_samples.png`) shows four test images from the smallest to the largest polyp,
-with their ground-truth masks. In our test set, the polyp covers between __% and __% of the image
-(median __%), and __ of the 120 test images contain a small polyp (under 5% of the image).
+with their ground-truth masks. In our test set, the polyp covers between 0.5% and 71.9% of the image
+(median 11.7%), and 27 of the 120 test images contain a small polyp (under 5% of the image).
 
 ## 2.2 Split
 We split the 1000 images once with a fixed random seed (42) into **800 training, 80 validation and
@@ -45,7 +45,7 @@ Validation and test images are never augmented.
 ## 2.5 Additional evaluation data
 Two further datasets are used **only for evaluation**, never for training:
 - **Kvasir-Sessile** (Jha et al., 2021): 196 of the Kvasir-SEG polyps that experts labelled as **sessile
-  (flat) and smaller than 10 mm**. We use it to tag the flat polyps in our test set (__ of the 120 test
+  (flat) and smaller than 10 mm**. We use it to tag the flat polyps in our test set (31 of the 120 test
   images) for the failure analysis.
 - **CVC-ClinicDB** (Bernal et al., 2015): 612 frames (384×288 pixels) from 29 colonoscopy videos recorded at
   Hospital Clínic in Barcelona, with expert masks. Because it comes from another hospital and another
