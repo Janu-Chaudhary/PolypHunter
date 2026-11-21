@@ -1,0 +1,105 @@
+[     8.9s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     8.9s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     8.9s stderr] 0.00s - to python to disable frozen modules.
+[     8.9s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[     9.6s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     9.6s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     9.6s stderr] 0.00s - to python to disable frozen modules.
+[     9.6s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[    35.0s stdout] torch 2.11.0+cu130 | smp 0.6.0 | device Tesla T4 | SMOKE False
+[    36.6s stdout] 1000 images | train 800 | val 80 | test 120
+[    37.1s stdout] 196 sessile (flat) polyp ids found
+[   195.5s stdout] CVC-ClinicDB: 612 images from /kaggle/input/datasets/balraj98/cvcclinicdb/PNG/Original
+[   242.3s stdout] [unet_scratch] ep   1/60 loss 1.3802 val dice 0.4356 iou 0.3115 (best 0.4356)
+[   285.2s stdout] [unet_scratch] ep   2/60 loss 1.2062 val dice 0.5316 iou 0.4005 (best 0.5316)
+[   333.1s stdout] [unet_scratch] ep   3/60 loss 1.0973 val dice 0.5744 iou 0.4348 (best 0.5744)
+[   378.6s stdout] [unet_scratch] ep   4/60 loss 1.0242 val dice 0.4409 iou 0.3287 (best 0.5744)
+[   425.1s stdout] [unet_scratch] ep   5/60 loss 0.9654 val dice 0.5285 iou 0.3964 (best 0.5744)
+[   471.2s stdout] [unet_scratch] ep   6/60 loss 0.9097 val dice 0.6304 iou 0.4987 (best 0.6304)
+[   517.7s stdout] [unet_scratch] ep   7/60 loss 0.8433 val dice 0.6466 iou 0.5207 (best 0.6466)
+[   564.1s stdout] [unet_scratch] ep   8/60 loss 0.7855 val dice 0.6677 iou 0.5657 (best 0.6677)
+[   610.2s stdout] [unet_scratch] ep   9/60 loss 0.7277 val dice 0.7111 iou 0.5919 (best 0.7111)
+[   656.5s stdout] [unet_scratch] ep  10/60 loss 0.6636 val dice 0.7302 iou 0.6219 (best 0.7302)
+[   702.8s stdout] [unet_scratch] ep  11/60 loss 0.6348 val dice 0.7347 iou 0.6342 (best 0.7347)
+[   748.7s stdout] [unet_scratch] ep  12/60 loss 0.6222 val dice 0.7142 iou 0.6012 (best 0.7347)
+[   794.9s stdout] [unet_scratch] ep  13/60 loss 0.5829 val dice 0.7707 iou 0.6685 (best 0.7707)
+[   841.1s stdout] [unet_scratch] ep  14/60 loss 0.5722 val dice 0.7807 iou 0.6774 (best 0.7807)
+[   887.3s stdout] [unet_scratch] ep  15/60 loss 0.5483 val dice 0.7725 iou 0.6706 (best 0.7807)
+[   933.7s stdout] [unet_scratch] ep  16/60 loss 0.5239 val dice 0.7632 iou 0.6623 (best 0.7807)
+[   980.3s stdout] [unet_scratch] ep  17/60 loss 0.5244 val dice 0.7913 iou 0.6908 (best 0.7913)
+[  1026.7s stdout] [unet_scratch] ep  18/60 loss 0.5057 val dice 0.8002 iou 0.7057 (best 0.8002)
+[  1072.6s stdout] [unet_scratch] ep  19/60 loss 0.5035 val dice 0.7937 iou 0.6949 (best 0.8002)
+[  1118.9s stdout] [unet_scratch] ep  20/60 loss 0.4888 val dice 0.8033 iou 0.7052 (best 0.8033)
+[  1165.5s stdout] [unet_scratch] ep  21/60 loss 0.4635 val dice 0.8055 iou 0.7041 (best 0.8055)
+[  1211.9s stdout] [unet_scratch] ep  22/60 loss 0.4695 val dice 0.7662 iou 0.6633 (best 0.8055)
+[  1258.0s stdout] [unet_scratch] ep  23/60 loss 0.4518 val dice 0.7994 iou 0.7069 (best 0.8055)
+[  1304.1s stdout] [unet_scratch] ep  24/60 loss 0.4445 val dice 0.7887 iou 0.6938 (best 0.8055)
+[  1350.5s stdout] [unet_scratch] ep  25/60 loss 0.4424 val dice 0.8188 iou 0.7260 (best 0.8188)
+[  1396.6s stdout] [unet_scratch] ep  26/60 loss 0.4363 val dice 0.8036 iou 0.7129 (best 0.8188)
+[  1443.0s stdout] [unet_scratch] ep  27/60 loss 0.4298 val dice 0.8195 iou 0.7296 (best 0.8195)
+[  1489.2s stdout] [unet_scratch] ep  28/60 loss 0.4191 val dice 0.8038 iou 0.7100 (best 0.8195)
+[  1535.4s stdout] [unet_scratch] ep  29/60 loss 0.4075 val dice 0.8331 iou 0.7442 (best 0.8331)
+[  1581.2s stdout] [unet_scratch] ep  30/60 loss 0.4037 val dice 0.8293 iou 0.7400 (best 0.8331)
+[  1627.0s stdout] [unet_scratch] ep  31/60 loss 0.4077 val dice 0.8125 iou 0.7232 (best 0.8331)
+[  1672.9s stdout] [unet_scratch] ep  32/60 loss 0.3876 val dice 0.8277 iou 0.7350 (best 0.8331)
+[  1719.0s stdout] [unet_scratch] ep  33/60 loss 0.3893 val dice 0.8274 iou 0.7376 (best 0.8331)
+[  1765.2s stdout] [unet_scratch] ep  34/60 loss 0.3680 val dice 0.8314 iou 0.7438 (best 0.8331)
+[  1811.1s stdout] [unet_scratch] ep  35/60 loss 0.3742 val dice 0.8165 iou 0.7264 (best 0.8331)
+[  1857.1s stdout] [unet_scratch] ep  36/60 loss 0.3611 val dice 0.8369 iou 0.7516 (best 0.8369)
+[  1903.2s stdout] [unet_scratch] ep  37/60 loss 0.3610 val dice 0.8238 iou 0.7322 (best 0.8369)
+[  1949.6s stdout] [unet_scratch] ep  38/60 loss 0.3476 val dice 0.8371 iou 0.7511 (best 0.8371)
+[  1996.1s stdout] [unet_scratch] ep  39/60 loss 0.3444 val dice 0.8384 iou 0.7538 (best 0.8384)
+[  2042.3s stdout] [unet_scratch] ep  40/60 loss 0.3481 val dice 0.8330 iou 0.7478 (best 0.8384)
+[  2088.8s stdout] [unet_scratch] ep  41/60 loss 0.3297 val dice 0.8420 iou 0.7583 (best 0.8420)
+[  2135.2s stdout] [unet_scratch] ep  42/60 loss 0.3276 val dice 0.8453 iou 0.7611 (best 0.8453)
+[  2181.4s stdout] [unet_scratch] ep  43/60 loss 0.3247 val dice 0.8333 iou 0.7454 (best 0.8453)
+[  2227.5s stdout] [unet_scratch] ep  44/60 loss 0.3107 val dice 0.8503 iou 0.7675 (best 0.8503)
+[  2273.5s stdout] [unet_scratch] ep  45/60 loss 0.3135 val dice 0.8500 iou 0.7685 (best 0.8503)
+[  2319.5s stdout] [unet_scratch] ep  46/60 loss 0.3006 val dice 0.8491 iou 0.7672 (best 0.8503)
+[  2365.8s stdout] [unet_scratch] ep  47/60 loss 0.2900 val dice 0.8409 iou 0.7613 (best 0.8503)
+[  2412.2s stdout] [unet_scratch] ep  48/60 loss 0.2862 val dice 0.8448 iou 0.7640 (best 0.8503)
+[  2458.7s stdout] [unet_scratch] ep  49/60 loss 0.2969 val dice 0.8519 iou 0.7735 (best 0.8519)
+[  2505.0s stdout] [unet_scratch] ep  50/60 loss 0.2822 val dice 0.8437 iou 0.7624 (best 0.8519)
+[  2551.3s stdout] [unet_scratch] ep  51/60 loss 0.2744 val dice 0.8483 iou 0.7664 (best 0.8519)
+[  2597.3s stdout] [unet_scratch] ep  52/60 loss 0.2758 val dice 0.8510 iou 0.7716 (best 0.8519)
+[  2643.5s stdout] [unet_scratch] ep  53/60 loss 0.2698 val dice 0.8527 iou 0.7731 (best 0.8527)
+[  2689.7s stdout] [unet_scratch] ep  54/60 loss 0.2694 val dice 0.8553 iou 0.7762 (best 0.8553)
+[  2736.0s stdout] [unet_scratch] ep  55/60 loss 0.2692 val dice 0.8516 iou 0.7725 (best 0.8553)
+[  2782.3s stdout] [unet_scratch] ep  56/60 loss 0.2613 val dice 0.8516 iou 0.7715 (best 0.8553)
+[  2828.4s stdout] [unet_scratch] ep  57/60 loss 0.2590 val dice 0.8511 iou 0.7704 (best 0.8553)
+[  2874.3s stdout] [unet_scratch] ep  58/60 loss 0.2596 val dice 0.8529 iou 0.7728 (best 0.8553)
+[  2920.2s stdout] [unet_scratch] ep  59/60 loss 0.2580 val dice 0.8526 iou 0.7729 (best 0.8553)
+[  2966.5s stdout] [unet_scratch] ep  60/60 loss 0.2687 val dice 0.8522 iou 0.7720 (best 0.8553)
+[  2966.5s stdout] [unet_scratch] done in 46.2 min
+[  3036.6s stdout] {
+[  3036.6s stdout]  "model": "unet_scratch",
+[  3036.6s stdout]  "dice": 0.8511,
+[  3036.6s stdout]  "iou": 0.7741,
+[  3036.6s stdout]  "precision": 0.8674,
+[  3036.6s stdout]  "recall": 0.8971,
+[  3036.6s stdout]  "thr_val": 0.5,
+[  3036.6s stdout]  "dice_tuned": 0.8511,
+[  3036.6s stdout]  "iou_tuned": 0.7741,
+[  3036.6s stdout]  "dice_tta": 0.8635,
+[  3036.6s stdout]  "iou_tta": 0.7891,
+[  3036.6s stdout]  "cvc_dice": 0.7499,
+[  3036.6s stdout]  "cvc_iou": 0.6546,
+[  3036.6s stdout]  "params_M": 31.0376,
+[  3036.6s stdout]  "fps_fp32": 11.5985,
+[  3036.6s stdout]  "fps_fp16": 45.7366,
+[  3036.6s stdout]  "fps_fp16_tta": 14.737,
+[  3036.6s stdout]  "train_min": 46.1673,
+[  3036.6s stdout]  "epochs": 60,
+[  3036.6s stdout]  "lr": 0.0003,
+[  3036.6s stdout]  "gpu": "Tesla T4",
+[  3036.6s stdout]  "smoke": false
+[  3036.6s stdout] }
+[  3037.7s stdout] saved /kaggle/working/figures/dataset_samples.png
+[  3044.0s stderr] /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+[  3044.0s stderr]   cells[i][c] = re.sub('\\\\\|', '|', cell)
+[  3044.2s stderr] /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+[  3044.2s stderr]   text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[  3045.1s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+[  3045.2s stderr] [NbConvertApp] Writing 44018 bytes to __notebook__.ipynb
+[  3048.1s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to html
+[  3048.8s stderr] [NbConvertApp] Writing 418148 bytes to __results__.html
