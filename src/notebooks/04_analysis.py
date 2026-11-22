@@ -100,7 +100,7 @@ print(table.to_string())
 # image affects both equally and only the real difference between the models is left.
 # `p_value` (two-sided) is twice the share of resamples on the less common side of zero. Below 0.05 (the same as
 # the gain's interval not containing 0) means the difference is unlikely to come from which images happened to
-# land in the test set.
+# land in the test set. The same paired test is also run for every pair of models (`pairwise_dice.csv`).
 #
 # These intervals cover the choice of test images only. They do not cover training randomness (one seed per model).
 
@@ -114,6 +114,17 @@ def bootstrap_ci(values, idx):
     lo, hi = np.percentile(boot, [2.5, 97.5])
     return values.mean(), lo, hi, boot
 
+def paired_gain(a, b):
+    """Paired bootstrap of model a's Dice minus model b's Dice on the same test images.
+
+    a, b: model keys. Uses the shared resamples IDX, so every pair is compared on identical resamples.
+    Returns (mean gain, 2.5% and 97.5% percentiles, two-sided p-value)."""
+    diff = DF[f"dice_{a}"].to_numpy() - DF[f"dice_{b}"].to_numpy()          # per-image gain of a over b
+    g, glo, ghi, gboot = bootstrap_ci(diff, IDX)
+    # two-sided: a could also be worse than b; capped at 1 when the gain is ~0
+    p = min(1.0, 2 * min((gboot <= 0).mean(), (gboot >= 0).mean()))
+    return g, glo, ghi, p
+
 # Each row of IDX is one resample of the test set. The same rows are used for every model, so the
 # comparisons between models are paired image by image.
 IDX = np.random.default_rng(42).integers(0, len(DF), size=(N_BOOT, len(DF)))
@@ -124,15 +135,25 @@ for m in MODELS:
     i, ilo, ihi, _ = bootstrap_ci(DF[f"iou_{m}"].to_numpy(), IDX)
     row = {"model": LABELS[m], "dice": d, "dice_lo": lo, "dice_hi": hi, "iou": i, "iou_lo": ilo, "iou_hi": ihi}
     if m != base:
-        diff = DF[f"dice_{m}"].to_numpy() - DF[f"dice_{base}"].to_numpy()     # per-image gain over the baseline
-        g, glo, ghi, gboot = bootstrap_ci(diff, IDX)
-        # two-sided: the model could also be worse than the baseline; capped at 1 when the gain is ~0
-        p = min(1.0, 2 * min((gboot <= 0).mean(), (gboot >= 0).mean()))
+        g, glo, ghi, p = paired_gain(m, base)
         row.update(gain_vs_baseline=g, gain_lo=glo, gain_hi=ghi, p_value=p)
     ci_rows.append(row)
 CI_TABLE = pd.DataFrame(ci_rows, index=MODELS).round(4)
 CI_TABLE.to_csv(os.path.join(SUMMARY, "confidence_intervals.csv"))
 print(CI_TABLE.to_string())
+
+# Every pair of models, not only against the baseline: needed to tell whether the best models really differ.
+# Each pair is written as (higher mean Dice) minus (lower mean Dice), so the gain is never negative.
+pair_rows = []
+for i, a in enumerate(MODELS):
+    for b in MODELS[i + 1:]:
+        hi_m, lo_m = (a, b) if DF[f"dice_{a}"].mean() >= DF[f"dice_{b}"].mean() else (b, a)
+        g, glo, ghi, p = paired_gain(hi_m, lo_m)
+        pair_rows.append({"better": LABELS[hi_m], "worse": LABELS[lo_m], "gain": g, "gain_lo": glo,
+                          "gain_hi": ghi, "p_value": p})
+PAIRS = pd.DataFrame(pair_rows).sort_values("gain").round(4)
+PAIRS.to_csv(os.path.join(SUMMARY, "pairwise_dice.csv"), index=False)
+print(PAIRS.to_string(index=False))
 
 # %% [markdown]
 # ## 2. Training curves
