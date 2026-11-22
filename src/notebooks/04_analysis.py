@@ -54,13 +54,16 @@ def load_results(root):
 
     Returns (models in ORDER, metrics dict per model, history DataFrame per model,
     per-image test DataFrame joined with the test attributes: area_frac, contrast, sessile)."""
+    # only the models whose results exist, in the fixed ORDER (so tables and figures always list them the same way)
     models = [m for m in ORDER if os.path.exists(os.path.join(root, m, "metrics.json"))]
     assert models, f"no results found in {root}: run tools/make_fake_results.py or merge the training PRs"
-    met = {m: json.load(open(os.path.join(root, m, "metrics.json"))) for m in models}
-    hist = {m: pd.read_csv(os.path.join(root, m, "history.csv")) for m in models}
-    df = pd.read_csv(os.path.join(root, "test_attributes.csv"))
+    met = {m: json.load(open(os.path.join(root, m, "metrics.json"))) for m in models}   # model -> metrics dict
+    hist = {m: pd.read_csv(os.path.join(root, m, "history.csv")) for m in models}       # model -> one row per epoch
+    df = pd.read_csv(os.path.join(root, "test_attributes.csv"))     # 120 rows: name, area_frac, contrast, sessile
     for m in models:
         pi = pd.read_csv(os.path.join(root, m, "per_image_test.csv"))
+        # join on the image name, adding two columns per model (dice_<model>, iou_<model>); still 120 rows,
+        # one per test image, so every model's score for an image sits in the same row
         df = df.merge(pi[["name", "dice", "iou"]].rename(columns={"dice": f"dice_{m}", "iou": f"iou_{m}"}), on="name")
     return models, met, hist, df
 
@@ -79,11 +82,13 @@ def save(fig, name, dpi=150):
 # %%
 COLS = ["dice", "iou", "precision", "recall", "thr_val", "dice_tuned", "dice_tta", "cvc_dice", "cvc_iou",
         "params_M", "fps_fp32", "fps_fp16", "fps_fp16_tta", "train_min"]
+# one row per model, one column per metric; .get(c, NaN) leaves a gap if a metric is missing (e.g. no CVC run)
 table = pd.DataFrame([{c: MET[m].get(c, np.nan) for c in COLS} for m in MODELS], index=MODELS).round(4)
 # miss rate over all 120 test images: the share where the polyp was essentially not found
+# (the mean of a True/False column is the fraction of True values)
 table.insert(4, "miss_rate", [(DF[f"dice_{m}"] < MISS_DICE).mean().round(4) for m in MODELS])
-table["ms_per_frame_fp16"] = (1000 / table["fps_fp16"]).round(2)
-table["realtime_fp16"] = table["fps_fp16"] >= REALTIME_FPS
+table["ms_per_frame_fp16"] = (1000 / table["fps_fp16"]).round(2)    # time per frame = 1000 ms / frames per second
+table["realtime_fp16"] = table["fps_fp16"] >= REALTIME_FPS          # True if the model keeps up with 25 FPS video
 table.insert(0, "model", [LABELS[m] for m in MODELS])
 table.to_csv(os.path.join(SUMMARY, "results_table.csv"))
 open(os.path.join(SUMMARY, "results_table.txt"), "w").write(table.to_string())   # readable copy for the report
@@ -110,8 +115,9 @@ def bootstrap_ci(values, idx):
 
     values: one number per test image (N,); idx: (N_BOOT, N) resample indices, each row one resample.
     Returns (mean, lower 2.5% percentile, upper 97.5% percentile, the N_BOOT resampled means)."""
+    # values[idx] picks, for every resample, 120 values drawn with replacement: shape (N_BOOT, N) = (2000, 120)
     boot = values[idx].mean(axis=1)                  # one mean per resample
-    lo, hi = np.percentile(boot, [2.5, 97.5])
+    lo, hi = np.percentile(boot, [2.5, 97.5])        # the middle 95% of the 2000 resampled means
     return values.mean(), lo, hi, boot
 
 def paired_gain(a, b):
@@ -121,16 +127,19 @@ def paired_gain(a, b):
     Returns (mean gain, 2.5% and 97.5% percentiles, two-sided p-value)."""
     diff = DF[f"dice_{a}"].to_numpy() - DF[f"dice_{b}"].to_numpy()          # per-image gain of a over b
     g, glo, ghi, gboot = bootstrap_ci(diff, IDX)
-    # two-sided: a could also be worse than b; capped at 1 when the gain is ~0
+    # p-value: the share of resampled mean gains that fall on the "wrong" side of zero, doubled because the test
+    # is two-sided: a could also be worse than b; capped at 1 when the gain is ~0
     p = min(1.0, 2 * min((gboot <= 0).mean(), (gboot >= 0).mean()))
     return g, glo, ghi, p
 
 # Each row of IDX is one resample of the test set. The same rows are used for every model, so the
 # comparisons between models are paired image by image.
+# IDX: (N_BOOT, 120) = (2000, 120) random row numbers between 0 and 119; seed 42 makes the intervals reproducible.
 IDX = np.random.default_rng(42).integers(0, len(DF), size=(N_BOOT, len(DF)))
-base = BASELINE if BASELINE in MODELS else MODELS[0]
+base = BASELINE if BASELINE in MODELS else MODELS[0]     # fall back to the first model if the baseline is missing
 ci_rows = []
 for m in MODELS:
+    # interval of the model's own mean Dice and mean IoU (each column holds 120 per-image values)
     d, lo, hi, _ = bootstrap_ci(DF[f"dice_{m}"].to_numpy(), IDX)
     i, ilo, ihi, _ = bootstrap_ci(DF[f"iou_{m}"].to_numpy(), IDX)
     row = {"model": LABELS[m], "dice": d, "dice_lo": lo, "dice_hi": hi, "iou": i, "iou_lo": ilo, "iou_hi": ihi}
@@ -146,7 +155,7 @@ print(CI_TABLE.to_string())
 # Each pair is written as (higher mean Dice) minus (lower mean Dice), so the gain is never negative.
 pair_rows = []
 for i, a in enumerate(MODELS):
-    for b in MODELS[i + 1:]:
+    for b in MODELS[i + 1:]:                        # each unordered pair once: 5 models -> 10 pairs
         hi_m, lo_m = (a, b) if DF[f"dice_{a}"].mean() >= DF[f"dice_{b}"].mean() else (b, a)
         g, glo, ghi, p = paired_gain(hi_m, lo_m)
         pair_rows.append({"better": LABELS[hi_m], "worse": LABELS[lo_m], "gain": g, "gain_lo": glo,
@@ -195,6 +204,7 @@ def label_side(m):
 fig, ax = plt.subplots(figsize=(7.5, 5))
 for m in MODELS:
     x, y = MET[m]["fps_fp16"], MET[m]["dice"]
+    # yerr = [[distance down], [distance up]]: the CI is not symmetric around the mean, so both are given
     ax.errorbar(x, y, yerr=[[y - CI_TABLE.dice_lo[m]], [CI_TABLE.dice_hi[m] - y]], color=COLORS[m],
                 lw=1.5, capsize=4, zorder=2)
     ax.scatter(x, y, s=40 + 4 * MET[m]["params_M"], color=COLORS[m], edgecolor="white", linewidth=1.5,
@@ -221,19 +231,24 @@ fig.tight_layout(); save(fig, "accuracy_vs_speed.png")
 #   separates the two effects.
 
 # %%
+# pd.cut: fixed bin edges (0, 0.05], (0.05, 0.20], (0.20, 1.0] on the polyp's share of the image
 DF["size_bin"] = pd.cut(DF.area_frac, [0, SMALL, LARGE, 1.0],
                         labels=["small (<5%)", "medium (5-20%)", "large (>20%)"])
-DF["morphology"] = np.where(DF.sessile == 1, "sessile/flat", "other")
+DF["morphology"] = np.where(DF.sessile == 1, "sessile/flat", "other")             # expert label from Kvasir-Sessile
+# pd.qcut: quantile bins, i.e. edges chosen so each third holds the same number of images (40 of 120)
 DF["contrast_bin"] = pd.qcut(DF.contrast, 3, labels=["low", "mid", "high"])     # thirds of the test set
 DF["small"] = np.where(DF.area_frac < SMALL, "small (<5%)", "not small")
 
 def by_group(cols):
-    """Mean Dice and miss rate (Dice < MISS_DICE) per model for each value of the column(s) cols, with group size n."""
-    g = DF.groupby(cols, observed=False)
-    t = pd.DataFrame({"n": g.size()})
+    """Mean Dice and miss rate (Dice < MISS_DICE) per model for each value of the column(s) cols, with group size n.
+
+    Returns one row per group (or per combination of groups when cols is a list) and, per model, a dice_ and a
+    miss_ column."""
+    g = DF.groupby(cols, observed=False)            # observed=False keeps empty groups so every table has all rows
+    t = pd.DataFrame({"n": g.size()})               # number of test images in each group
     for m in MODELS:
         t[f"dice_{m}"] = g[f"dice_{m}"].mean().round(4)
-        t[f"miss_{m}"] = g[f"dice_{m}"].apply(lambda s: (s < MISS_DICE).mean()).round(3)
+        t[f"miss_{m}"] = g[f"dice_{m}"].apply(lambda s: (s < MISS_DICE).mean()).round(3)   # share of misses in the group
     return t
 
 FAIL = {"size": by_group("size_bin"), "morphology": by_group("morphology"), "contrast": by_group("contrast_bin")}
@@ -247,8 +262,8 @@ print(f"\n--- by morphology and size ---\n{CROSS.to_string()}")
 fig, axs = plt.subplots(1, 3, figsize=(18, 4.8), sharey=True)
 w = 0.8 / len(MODELS)                                   # bar width so all models fit in one group
 for ax, (k, t) in zip(axs, FAIL.items()):
-    x = np.arange(len(t))
-    for i, m in enumerate(MODELS):
+    x = np.arange(len(t))                               # one group of bars per bin (e.g. small, medium, large)
+    for i, m in enumerate(MODELS):                      # model i's bar is shifted right by i bar widths
         # white edge = a thin gap between neighbouring bars, so similar colours stay apart
         ax.bar(x + i * w, t[f"dice_{m}"], w, color=COLORS[m], edgecolor="white", linewidth=1.5, label=LABELS[m])
     ax.set_xticks(x + w * (len(MODELS) - 1) / 2, [f"{a}\n(n={n})" for a, n in zip(t.index, t.n)])
@@ -332,11 +347,11 @@ elif not glob.glob(os.path.join(found[0], DF["name"].iloc[0] + ".*")):
 else:
     probs = {}
     for m in MODELS:
-        z = np.load(os.path.join(RESULTS_DIR, m, "test_probs.npz"))
+        z = np.load(os.path.join(RESULTS_DIR, m, "test_probs.npz"))   # names (120,), probs (120, 352, 352) uint8
         probs[m] = dict(zip(z["names"], z["probs"]))     # name -> uint8 probability map (0-255)
-    size = next(iter(probs[MODELS[0]].values())).shape[0]
-    best = max(MODELS, key=lambda m: MET[m]["dice"])
-    worst = DF.sort_values(f"dice_{best}").head(8)
+    size = next(iter(probs[MODELS[0]].values())).shape[0]   # side length of the saved maps (352)
+    best = max(MODELS, key=lambda m: MET[m]["dice"])        # the model with the highest mean test Dice
+    worst = DF.sort_values(f"dice_{best}").head(8)          # its 8 lowest-scoring test images
     fig, axs = plt.subplots(len(worst), 3, figsize=(9, 3 * len(worst)))
     for r, (_, row) in enumerate(worst.iterrows()):
         img, gt = load_test_image(*found, row["name"], size)
@@ -351,6 +366,7 @@ else:
     fig, axs = plt.subplots(len(pick), 2 + len(MODELS), figsize=(2.6 * (2 + len(MODELS)), 2.6 * len(pick)))
     for r, (_, row) in enumerate(pick.iterrows()):
         img, gt = load_test_image(*found, row["name"], size)
+        # columns: image, ground truth, then one predicted mask per model (probability > 0.5)
         panels = [(img, f"image, area {row.area_frac * 100:.1f}%", None), (gt, "ground truth", "gray")]
         panels += [(probs[m][row["name"]] > 127, f"{LABELS[m]}\nDice {row[f'dice_{m}']:.2f}", "gray") for m in MODELS]
         for c, (im, t, cmap) in enumerate(panels):
