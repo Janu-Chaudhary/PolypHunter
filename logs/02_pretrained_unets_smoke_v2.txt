@@ -1,0 +1,74 @@
+[     8.4s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     8.4s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     8.4s stderr] 0.00s - to python to disable frozen modules.
+[     8.4s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[     9.0s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     9.0s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     9.0s stderr] 0.00s - to python to disable frozen modules.
+[     9.0s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[    32.7s stdout] torch 2.11.0+cu130 | smp 0.6.0 | device Tesla T4 | SMOKE True
+[    34.3s stdout] 1000 images | train 32 | val 16 | test 16
+[    34.7s stdout] 196 sessile (flat) polyp ids found
+[   136.7s stdout] CVC-ClinicDB: 612 images from /kaggle/input/datasets/balraj98/cvcclinicdb/PNG/Original
+[   137.4s stderr] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[   137.4s stderr] 
+[   137.4s stderr] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[   146.0s stdout] [unet_resnet34] ep   1/1 loss 1.5983 val dice 0.2583 iou 0.1574 (best 0.2583)
+[   146.0s stdout] [unet_resnet34] done in 0.1 min
+[   148.1s stdout] {
+[   148.1s stdout]  "model": "unet_resnet34",
+[   148.1s stdout]  "dice": 0.3286,
+[   148.1s stdout]  "iou": 0.2228,
+[   148.1s stdout]  "precision": 0.2237,
+[   148.1s stdout]  "recall": 0.9963,
+[   148.1s stdout]  "thr_val": 0.75,
+[   148.1s stdout]  "dice_tuned": 0.4488,
+[   148.1s stdout]  "iou_tuned": 0.3057,
+[   148.1s stdout]  "dice_tta": 0.3228,
+[   148.1s stdout]  "iou_tta": 0.2182,
+[   148.1s stdout]  "cvc_dice": 0.2653,
+[   148.1s stdout]  "cvc_iou": 0.1557,
+[   148.1s stdout]  "params_M": 24.4364,
+[   148.1s stdout]  "fps_fp32": 54.7603,
+[   148.1s stdout]  "fps_fp16": 122.5512,
+[   148.1s stdout]  "fps_fp16_tta": 59.6772,
+[   148.1s stdout]  "train_min": 0.1131,
+[   148.1s stdout]  "epochs": 1,
+[   148.1s stdout]  "lr": 0.0002,
+[   148.1s stdout]  "gpu": "Tesla T4",
+[   148.1s stdout]  "smoke": true
+[   148.1s stdout] }
+[   153.6s stdout] [unet_mobilenetv2] ep   1/1 loss 1.4536 val dice 0.3350 iou 0.2164 (best 0.3350)
+[   153.6s stdout] [unet_mobilenetv2] done in 0.1 min
+[   155.5s stdout] {
+[   155.5s stdout]  "model": "unet_mobilenetv2",
+[   155.5s stdout]  "dice": 0.4103,
+[   155.5s stdout]  "iou": 0.2879,
+[   155.5s stdout]  "precision": 0.3141,
+[   155.5s stdout]  "recall": 0.8476,
+[   155.5s stdout]  "thr_val": 0.65,
+[   155.5s stdout]  "dice_tuned": 0.4947,
+[   155.5s stdout]  "iou_tuned": 0.3565,
+[   155.5s stdout]  "dice_tta": 0.4372,
+[   155.5s stdout]  "iou_tta": 0.3142,
+[   155.5s stdout]  "cvc_dice": 0.3467,
+[   155.5s stdout]  "cvc_iou": 0.2169,
+[   155.5s stdout]  "params_M": 6.6289,
+[   155.5s stdout]  "fps_fp32": 110.3092,
+[   155.5s stdout]  "fps_fp16": 103.4184,
+[   155.5s stdout]  "fps_fp16_tta": 73.279,
+[   155.5s stdout]  "train_min": 0.0758,
+[   155.5s stdout]  "epochs": 1,
+[   155.5s stdout]  "lr": 0.0003,
+[   155.5s stdout]  "gpu": "Tesla T4",
+[   155.5s stdout]  "smoke": true
+[   155.5s stdout] }
+[   155.9s stdout] saved /kaggle/working/figures/tta_tradeoff.png
+[   162.0s stderr] /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+[   162.0s stderr]   cells[i][c] = re.sub('\\\\\|', '|', cell)
+[   162.1s stderr] /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+[   162.1s stderr]   text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[   162.9s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+[   163.0s stderr] [NbConvertApp] Writing 110877 bytes to __notebook__.ipynb
+[   165.5s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to html
+[   166.2s stderr] [NbConvertApp] Writing 474036 bytes to __results__.html
