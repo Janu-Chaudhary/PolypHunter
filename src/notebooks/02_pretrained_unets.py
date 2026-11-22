@@ -27,14 +27,16 @@ subprocess.run([sys.executable, "-m", "pip", "install", "-q", "segmentation-mode
 
 # %%
 import matplotlib
-matplotlib.use("Agg")
+matplotlib.use("Agg")                 # draw figures to files only; Kaggle's batch run has no screen
 import matplotlib.pyplot as plt
 
+# D holds the fixed split, the images and masks of every split as arrays, and the four data loaders
+# (see prepare_data in the shared code above).
 D = prepare_data()
-write_shared(D)
-metrics = {}
+write_shared(D)                       # results/split.json and results/test_attributes.csv, shared by all notebooks
+metrics = {}                          # model key -> the dict saved in its metrics.json
 for name in ["unet_resnet34", "unet_mobilenetv2"]:
-    _, metrics[name] = run_model(name, D)
+    _, metrics[name] = run_model(name, D)   # trains 40 epochs and writes results/<name>/; the model itself is not needed
 
 # %% [markdown]
 # ## TTA trade-off figure (report section "Accuracy vs speed")
@@ -44,13 +46,15 @@ for name in ["unet_resnet34", "unet_mobilenetv2"]:
 # %%
 plt.figure(figsize=(7, 5))
 for name, m in metrics.items():
+    # an annotation with empty text draws only the arrow: from (speed, Dice) without TTA (xytext)
+    # to (speed, Dice) with TTA (xy)
     plt.annotate("", xy=(m["fps_fp16_tta"], m["dice_tta"]), xytext=(m["fps_fp16"], m["dice"]),
                  arrowprops=dict(arrowstyle="->", color="gray"))
-    plt.scatter(m["fps_fp16"], m["dice"], s=50, label=f"{name}")
-    plt.scatter(m["fps_fp16_tta"], m["dice_tta"], s=50, marker="x", c="k")
+    plt.scatter(m["fps_fp16"], m["dice"], s=50, label=f"{name}")             # dot = model without TTA
+    plt.scatter(m["fps_fp16_tta"], m["dice_tta"], s=50, marker="x", c="k")   # cross = same model with TTA
     plt.annotate(name, (m["fps_fp16"], m["dice"]), textcoords="offset points", xytext=(6, 6), fontsize=8)
-plt.scatter([], [], marker="x", c="k", label="same model + TTA (4 flips)")
-plt.axvline(25, ls="--", c="gray")
+plt.scatter([], [], marker="x", c="k", label="same model + TTA (4 flips)")   # empty scatter: only adds a legend entry
+plt.axvline(25, ls="--", c="gray")                                          # 25 FPS: real-time video
 plt.xlabel(f"frames per second (batch 1, {IMG_SIZE}x{IMG_SIZE}, fp16, {GPU_NAME})"); plt.ylabel("test Dice")
 plt.title("Test-time augmentation: accuracy gained vs speed lost"); plt.legend(fontsize=8)
 plt.tight_layout(); plt.savefig(os.path.join(FIGURES, "tta_tradeoff.png"), dpi=130); plt.close()
