@@ -1,7 +1,7 @@
 # 6. Failure analysis: small and flat polyps
 
 <!-- Owner: Manoj (#6). Numbers come from results/summary/failure_by_*.csv, written by 04_analysis.
-     `__` = waiting for the Kvasir-SEG images (worst-case gallery). -->
+     Figure 6.3 is figures/worst_cases.png. -->
 
 A mean Dice of 0.85 or 0.92 hides where a model fails. Clinically, the polyps that doctors miss most often are the
 **small** and the **flat (sessile)** ones (Section 1). In this section we split the 120 test images into groups
@@ -83,24 +83,39 @@ clinical picture of flat lesions that blend into the wall.
 but the three pretrained models each miss one or two large ones. Two large polyps (28% and 31% of the image, the
 second one sessile) are missed by both ResNet-34 and MobileNetV2, and the second one also by SegFormer, while
 both scratch models find them. Pretraining therefore trades many misses on small polyps for a few misses on
-large ones. __ (Check these two images in the worst-case gallery: e.g. an unusual colour, a polyp filling most of
-the frame, or glare.)
+large ones. Both images show the same pattern: the polyp has a raised, dome-shaped part and a large flat part
+around it, and the pretrained models outline only the dome. On the sessile one (`ck2bxw…`, row 2 of Figure 6.3)
+all three pretrained models mark only a small round nodule at the lower edge of a lesion that covers almost a
+third of the image. The scratch U-Net covers more of the flat area, though with a patchy, low-confidence mask.
+The pretrained encoders seem to have learned a strong idea of a polyp as a compact, raised blob, which helps them
+find small polyps but makes them overlook wide, flat lesions.
 
 ## 6.3 Worst cases
 Figure 6.3 (`figures/worst_cases.png`) shows the eight test images on which the best model, SegFormer, scored
 lowest, with the ground truth in green and the prediction in red. Likely reasons:
 
-1. __ (image name, area, Dice): __ (e.g. very small polyp, polyp at the image edge, blur, glare, polyp blending
-   into the wall, a fold mistaken for a polyp).
-2. __
-3. __
-4. __
-5. __
-6. __
-7. __
-8. __
+1. `cju3ykamdj…` (1.7% of the image, Dice 0.20): a tiny reddish polyp in a fold next to an over-exposed bright
+   fold. SegFormer marks only a sliver of it and marks a round bump of normal tissue below it instead.
+2. `ck2bxw18mm…` (30.6%, sessile, Dice 0.22): a large flat lesion that blends into the wall, with glare at the
+   upper left. SegFormer finds only the raised nodule at its lower edge (see Section 6.2).
+3. `cju6vvb8sv…` (1.5%, sessile, Dice 0.35): a small flat polyp on a fold. The prediction covers it but spreads
+   along the fold onto neighbouring tissue, so most of the predicted area is wrong.
+4. `cju85c2d4l…` (1.3%, sessile, Dice 0.55): the small polyp is found correctly, but a second round structure at
+   the left edge of the image, next to the black overlay box, is also marked as a polyp.
+5. `cju32zhbnc…` (25.3%, Dice 0.59): the polyp is found, but the prediction also covers the large neighbouring fold
+   on its left, which has a similar colour and texture.
+6. `cju7aez2x1…` (2.9%, sessile, Dice 0.67): the polyp sits inside a yellowish rim. The ground truth covers only
+   the central part and the prediction includes the rim, where the true border is ambiguous.
+7. `cju2yljr0y…` (22.6%, Dice 0.70): a pale, glossy polyp with strong glare. The prediction extends onto the fold
+   above and to the left of it.
+8. `cju2zo0fwz…` (8.2%, sessile, Dice 0.78): the image contains two polyps. SegFormer outlines the larger one
+   well but misses the second.
 
-__ (One sentence on the common pattern, e.g. "six of the eight are small sessile polyps".)
+Four of the eight are small polyps and five are sessile, so the groups of Section 6.2 are again
+over-represented. Only three of the eight (images 1–3) are misses with Dice below 0.5. In the other five,
+SegFormer finds the polyp but gets its extent wrong: four times it spreads onto a neighbouring fold or rim, and
+once it misses a second polyp. Its remaining errors are therefore mostly about **where the polyp ends** rather than
+**whether there is a polyp**, the opposite of the scratch models, whose failures are mostly missed small polyps.
 
 ## 6.4 What this means
 SegFormer and U-Net + ResNet-34 are the most reliable models on the polyps that matter most clinically. Each

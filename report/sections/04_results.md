@@ -1,7 +1,7 @@
 # 4. Results
 
 <!-- Owner: Manoj (#6). Numbers come from results/summary/results_table.csv, confidence_intervals.csv and
-     pairwise_dice.csv, written by 04_analysis. `__` = waiting for the Kvasir-SEG images (galleries). -->
+     pairwise_dice.csv, written by 04_analysis. -->
 
 ## 4.1 Main results
 Table 4.1 compares the five models on the same 120 test images. All numbers are means over images: each
@@ -108,8 +108,20 @@ baseline and 54 for the Attention U-Net. No model overfitted: the validation Dic
 
 ## 4.4 Qualitative comparison
 Figure 4.2 (`figures/model_comparison.png`) shows five test polyps, from the smallest to the largest, with the
-ground truth and the mask predicted by each model. __ (Describe what is visible: e.g. which models miss the
-smallest polyp, which ones produce cleaner borders on large polyps, any false positives on glare or folds.)
+ground truth and the mask predicted by each model.
+- **The smallest polyp (0.5% of the image)** separates the models most. The scratch U-Net and ResNet-34 both mark
+  a large bright region nearby instead of the polyp (Dice 0.13 and 0.14). MobileNetV2 and the Attention U-Net find
+  it only partly, among scattered false detections (0.50 and 0.59). Only SegFormer outlines it cleanly (0.82).
+- **A thin, elongated polyp (5.5%)**: the scratch U-Net breaks the mask into fragments (0.68), while the other four
+  models score 0.91–0.96.
+- **A medium polyp (11.7%)** is easy for every model (all 0.96).
+- **Large polyps (22.4% and 71.9%)**: the difference is in the quality of the mask. The two scratch models
+  produce ragged, blocky borders, and on the largest polyp, which fills most of the frame, they leave holes and
+  fragments (scratch U-Net 0.78, Attention U-Net 0.57). The three pretrained models produce smooth, filled masks
+  (0.92–0.98).
+
+Pretrained encoders therefore help at both ends of the size range: they find small polyps more often and give
+cleaner, complete masks on large ones.
 
 ## 4.5 Summary
 The five models fall into three accuracy tiers. The two U-Nets trained from scratch score about 0.85, and
