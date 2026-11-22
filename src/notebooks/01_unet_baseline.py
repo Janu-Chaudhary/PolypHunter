@@ -24,11 +24,14 @@ subprocess.run([sys.executable, "-m", "pip", "install", "-q", "segmentation-mode
 
 # %%
 import matplotlib
-matplotlib.use("Agg")
+matplotlib.use("Agg")                 # draw figures to files only; Kaggle's batch run has no screen
 import matplotlib.pyplot as plt
 
+# D holds the fixed split, the images and masks of every split as arrays, and the four data loaders
+# (see prepare_data in the shared code above).
 D = prepare_data()
-write_shared(D)
+write_shared(D)                       # results/split.json and results/test_attributes.csv, shared by all notebooks
+# train the from-scratch U-Net (60 epochs) and write results/unet_scratch/; metrics = the dict saved in metrics.json
 model, metrics = run_model("unet_scratch", D)
 
 # %% [markdown]
@@ -36,12 +39,14 @@ model, metrics = run_model("unet_scratch", D)
 # Four test images of increasing polyp size, each with its ground-truth mask, to show what the task looks like.
 
 # %%
+# argsort orders the 120 test images by polyp area; linspace picks 4 evenly spaced positions in that order
+# (first, two in between, last), i.e. the smallest polyp, two medium ones and the largest
 idx = np.argsort(D["area_te"])[np.linspace(0, len(D["area_te"]) - 1, 4).astype(int)]   # smallest .. largest polyp
-fig, axs = plt.subplots(2, 4, figsize=(12, 6))
+fig, axs = plt.subplots(2, 4, figsize=(12, 6))      # row 0: images, row 1: masks; one column per chosen polyp
 for c, i in enumerate(idx):
     axs[0, c].imshow(D["Xte"][i]); axs[0, c].set_title(f"polyp area {D['area_te'][i] * 100:.1f}%", fontsize=9)
     axs[1, c].imshow(D["Yte"][i], cmap="gray"); axs[1, c].set_title("ground-truth mask", fontsize=9)
 for a in axs.flat:
-    a.axis("off")
+    a.axis("off")                                   # images need no axis ticks
 plt.tight_layout(); plt.savefig(os.path.join(FIGURES, "dataset_samples.png"), dpi=130); plt.close()
 print("saved", os.path.join(FIGURES, "dataset_samples.png"))
