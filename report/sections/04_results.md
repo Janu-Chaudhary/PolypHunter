@@ -44,8 +44,8 @@ What the table shows:
   baseline, with 6 M fewer parameters. It has the highest recall (0.943) with a precision close to the best, so
   it finds more of each polyp without marking much extra tissue. It misses only 3 of the 120 polyps.
 - **Threshold tuning.** The best validation thresholds ranged from 0.45 to 0.60, and tuning changed test Dice
-  by at most 0.001 for every model (Section 3.5). The models are well calibrated around 0.5, so tuning is not a
-  useful source of gain.
+  by at most 0.001 for every model (Section 3.5). The predictions are sharp, with most pixels close to 0 or 1, so
+  moving the threshold changes very few of them, and tuning is not a useful source of gain.
 - **Test-time augmentation** raised the Dice of every model, by between 0.003 (Attention U-Net) and 0.012
   (baseline): ResNet-34 0.903 → 0.912, MobileNetV2 0.894 → 0.900, SegFormer 0.917 → 0.926. Section 5 discusses
   what it costs in speed.
@@ -128,6 +128,6 @@ The five models fall into three accuracy tiers. The two U-Nets trained from scra
 attention gates add nothing measurable. The U-Nets with ImageNet-pretrained CNN encoders reach 0.89–0.90, a
 significant gain from transfer learning alone. SegFormer, with a pretrained transformer encoder, is the most
 accurate at 0.917, although its lead over ResNet-34 is not statistically significant on 120 test images. All
-five models run above 25 frames per second in fp16. U-Net + ResNet-34 gives the best accuracy for its speed:
-it is the fastest model (109.5 frames per second) and is within the error margin of SegFormer. Section 6 shows
-where the remaining errors are.
+five models run above 25 frames per second in fp16. Figure 4.3 (`figures/accuracy_vs_speed.png`) puts accuracy
+and speed together: U-Net + ResNet-34 gives the best accuracy for its speed, as the fastest model (109.5 frames
+per second) and within the error margin of SegFormer. Section 6 shows where the remaining errors are.
