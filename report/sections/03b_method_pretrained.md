@@ -16,9 +16,10 @@ of a block back onto its output (`y = F(x) + x`) instead of only passing it thro
 shortcut lets gradients flow directly through the skip path during backpropagation, which is what makes
 very deep encoders like this one trainable at all, and is also why its ImageNet features transfer well: the
 network can reuse early, general-purpose filters almost unchanged while later layers specialise. At
-**24.4 M parameters** it is smaller than the from-scratch baseline (31.0 M, Section 3.1) despite being a
-deeper network, because standard residual blocks use fewer, wider convolutions than our baseline's
-double-convolution blocks.
+**24.4 M parameters** it is smaller than the from-scratch baseline (31.0 M, Section 3.1) even though it is
+deeper, because its widest layers have 512 channels instead of 1024 (the baseline's 1024-channel bottleneck
+alone holds about 14 M parameters, `common.py` line 244), and the `smp` decoder (256 → 16 channels) is
+lighter than ours (512 → 64).
 
 ### MobileNetV2 encoder (`unet_mobilenetv2`)
 Built with `smp.Unet("mobilenet_v2", encoder_weights="imagenet")`. MobileNetV2 replaces each standard 3×3
@@ -32,12 +33,12 @@ is our candidate for a model light enough to run in real time (Section 5).
 ### Training setup
 Both models train for **40 epochs**, fewer than the baseline's 60, because a pretrained encoder already
 starts close to a good solution and converges faster — most of the remaining learning is in the decoder and
-in adapting the encoder to this domain, not in re-learning low-level features. The learning rate is lower
-than the baseline's 3·10⁻⁴: **2·10⁻⁴ for ResNet-34** and **3·10⁻⁴ for MobileNetV2**. A smaller rate keeps the
-early optimisation steps from making large updates to the pretrained weights before the new decoder has
-learned anything useful — large early updates would otherwise erase the ImageNet features before they can
-help. Loss, optimiser (AdamW), schedule (OneCycle), batch size and evaluation metrics are unchanged from
-Section 3.1.
+in adapting the encoder to this domain, not in re-learning low-level features. Only ResNet-34 uses a
+learning rate lower than the baseline's: **2·10⁻⁴**, which keeps the early optimisation steps from making
+large updates to the pretrained weights before the new decoder has learned anything useful — large early
+updates would otherwise erase the ImageNet features before they can help. MobileNetV2 trains stably at the
+baseline's own **3·10⁻⁴**, so it keeps that rate unchanged. Loss, optimiser (AdamW), schedule (OneCycle),
+batch size and evaluation metrics are unchanged from Section 3.1.
 
 On the test set, `unet_resnet34` reaches a **Dice of 0.903** (IoU 0.846) and `unet_mobilenetv2` reaches a
 **Dice of 0.894** (IoU 0.835) — both well above the from-scratch baseline's 0.851, confirming that ImageNet
