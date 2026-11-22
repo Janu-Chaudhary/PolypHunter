@@ -27,7 +27,40 @@ The Markdown drafts it was written from are in `report/sections/`, and they are 
 
 ## Results
 
-_Filled in from `results/` after the full Kaggle run._
+Test set of Kvasir-SEG (120 images, fixed split). Every number comes from `results/summary/results_table.csv`.
+FPS is batch 1 at 352×352 on a Kaggle T4 GPU. "Miss rate" is the share of test images with Dice below 0.5.
+
+| Model | Params (M) | Dice | IoU | Dice + TTA | Miss rate | CVC-ClinicDB Dice | FPS fp32 | FPS fp16 | Train time |
+|---|---|---|---|---|---|---|---|---|---|
+| U-Net (scratch) | 31.0 | 0.851 | 0.774 | 0.863 | 4.2% | 0.750 | 11.6 | 45.7 | 46 min |
+| U-Net + ResNet-34 | 24.4 | 0.903 | 0.846 | 0.912 | 3.3% | 0.828 | 44.9 | **109.5** | 9 min |
+| U-Net + MobileNetV2 | **6.6** | 0.894 | 0.835 | 0.900 | 5.0% | 0.753 | **86.5** | 91.7 | 8 min |
+| Attention U-Net | 31.4 | 0.854 | 0.775 | 0.857 | 5.0% | 0.741 | 10.6 | 40.7 | 54 min |
+| **SegFormer (MiT-B2)** | 24.7 | **0.917** | **0.865** | **0.926** | **2.5%** | **0.863** | 56.9 | 43.3 | 12 min |
+
+**Key findings**
+- **Pretrained encoders matter most.** ResNet-34, MobileNetV2 and SegFormer all beat the from-scratch U-Net
+  significantly (paired bootstrap, p < 0.001). Attention gates add nothing measurable (+0.003 Dice, p = 0.73).
+- **SegFormer is the most accurate model**, but its lead over ResNet-34 (+0.014 Dice) is not significant on
+  120 test images (p = 0.17).
+- **Real time:** in fp16, all five models exceed the 25 FPS of colonoscopy video. In fp32 only ResNet-34,
+  MobileNetV2 and SegFormer do. SegFormer is faster in fp32 than in fp16.
+- **Small and flat polyps remain the hardest.** The baseline misses 18.5% of small polyps (< 5% of the image),
+  while ResNet-34 and SegFormer miss 7.4%.
+- **Generalisation:** on CVC-ClinicDB (another hospital, no retraining), SegFormer loses only 0.054 Dice;
+  MobileNetV2 loses the most (0.141).
+- **Recommendation:** SegFormer where accuracy matters most, U-Net + ResNet-34 where speed matters most.
+
+<p align="center">
+  <img src="figures/accuracy_vs_speed.png" alt="Test Dice against inference speed for the five models" width="48%">
+  <img src="figures/failure_analysis.png" alt="Mean test Dice by polyp size, morphology and contrast" width="48%">
+</p>
+<p align="center">
+  <img src="figures/model_comparison.png" alt="Five test polyps with the mask predicted by each model" width="80%">
+</p>
+
+The full analysis (confidence intervals, failure analysis, generalisation, limitations) is in the
+[report](report/REPORT_CVPR.pdf).
 
 ## Repository layout
 
