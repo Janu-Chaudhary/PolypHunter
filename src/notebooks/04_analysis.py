@@ -158,14 +158,15 @@ fig.tight_layout(); save(fig, "training_curves.png")
 def label_side(m):
     """'left' if another model sits close to the right of model m (its label would run into it), else 'right'.
 
-    A neighbour is in the way when it is within 10% of the x range to the right and either its point is within
-    8% of the y range or its error bar spans the label's height."""
+    A neighbour is in the way when it is within 20% of the x range to the right (about the width of the longest
+    label at font size 8) and either its point is within 8% of the y range or its error bar spans the label's
+    height."""
     xs = {k: MET[k]["fps_fp16"] for k in MODELS}; ys = {k: MET[k]["dice"] for k in MODELS}
     xr = max(xs.values()) * 1.3                          # same as the x limit set below
     yr = max(CI_TABLE.dice_hi) - min(CI_TABLE.dice_lo)   # the error bars set the y range
     def in_way(k):
         """True if model k's point or error bar would sit under model m's label."""
-        close_x = 0 <= xs[k] - xs[m] < 0.10 * xr
+        close_x = 0 <= xs[k] - xs[m] < 0.20 * xr
         bar_covers = CI_TABLE.dice_lo[k] <= ys[m] <= CI_TABLE.dice_hi[k]
         return close_x and (abs(ys[k] - ys[m]) < 0.08 * yr or bar_covers)
     return "left" if any(in_way(k) for k in MODELS if k != m) else "right"
