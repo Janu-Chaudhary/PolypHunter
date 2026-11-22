@@ -1,0 +1,11 @@
+better,worse,gain,gain_lo,gain_hi,p_value
+Attention U-Net,U-Net (scratch),0.0026,-0.0114,0.0176,0.728
+U-Net + ResNet-34,U-Net + MobileNetV2,0.0092,-0.0088,0.0274,0.332
+SegFormer (MiT-B2),U-Net + ResNet-34,0.0141,-0.006,0.0363,0.173
+SegFormer (MiT-B2),U-Net + MobileNetV2,0.0234,0.0077,0.0402,0.005
+U-Net + MobileNetV2,Attention U-Net,0.0401,0.0191,0.062,0.0
+U-Net + MobileNetV2,U-Net (scratch),0.0427,0.0227,0.0646,0.0
+U-Net + ResNet-34,Attention U-Net,0.0494,0.0223,0.0746,0.0
+U-Net + ResNet-34,U-Net (scratch),0.0519,0.0279,0.0766,0.0
+SegFormer (MiT-B2),Attention U-Net,0.0635,0.042,0.0877,0.0
+SegFormer (MiT-B2),U-Net (scratch),0.0661,0.0424,0.0928,0.0

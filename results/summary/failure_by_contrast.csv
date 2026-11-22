@@ -1,0 +1,4 @@
+contrast_bin,n,dice_unet_scratch,miss_unet_scratch,dice_unet_resnet34,miss_unet_resnet34,dice_unet_mobilenetv2,miss_unet_mobilenetv2,dice_attention_unet,miss_attention_unet,dice_segformer_mitb2,miss_segformer_mitb2
+low,40,0.8364,0.05,0.8965,0.025,0.8831,0.075,0.8611,0.025,0.9068,0.025
+mid,40,0.8253,0.075,0.8694,0.075,0.8649,0.075,0.8233,0.1,0.8984,0.05
+high,40,0.8915,0.0,0.9431,0.0,0.9333,0.0,0.8765,0.025,0.9462,0.0

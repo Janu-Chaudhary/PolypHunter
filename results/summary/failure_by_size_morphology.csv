@@ -1,0 +1,5 @@
+morphology,small,n,dice_unet_scratch,miss_unet_scratch,dice_unet_resnet34,miss_unet_resnet34,dice_unet_mobilenetv2,miss_unet_mobilenetv2,dice_attention_unet,miss_attention_unet,dice_segformer_mitb2,miss_segformer_mitb2
+other,not small,80,0.8994,0.0,0.9269,0.012,0.9239,0.025,0.8964,0.0,0.9417,0.0
+other,small (<5%),9,0.8261,0.111,0.8744,0.111,0.8579,0.111,0.8037,0.111,0.8705,0.111
+sessile/flat,not small,13,0.8398,0.0,0.863,0.077,0.8778,0.077,0.8482,0.0,0.8804,0.077
+sessile/flat,small (<5%),18,0.657,0.222,0.8399,0.056,0.7894,0.111,0.6926,0.278,0.8579,0.056
