@@ -1,30 +1,39 @@
 # 8. Conclusion and limitations
 
-<!-- Owner: Manoj (#6). `__` = waiting for the results of #4 (Trivedh). -->
+<!-- Owner: Manoj (#6). The recommendation matches Section 5 (Trivedh). -->
 
 ## 8.1 Conclusion
 We compared five U-Net variants for polyp segmentation on Kvasir-SEG, all trained and evaluated with the same
 split, augmentation, loss and code. The U-Net trained from scratch is already a strong baseline (Dice 0.851,
-IoU 0.774). Adding attention gates changed nothing measurable (+0.003 Dice, p = 0.73), while replacing the encoder
-with SegFormer's pretrained transformer gave a clear, significant gain (+0.066 Dice, to 0.917).
-__ (Pretrained CNN encoders: ResNet-34 +__, MobileNetV2 +__.)
+IoU 0.774). Adding attention gates changed nothing measurable (+0.003 Dice, p = 0.73). What mattered was a
+pretrained encoder: ImageNet-pretrained CNN encoders raised the Dice significantly (ResNet-34 +0.052 to 0.903,
+MobileNetV2 +0.043 to 0.894), and SegFormer's pretrained transformer encoder gave the largest gain (+0.066, to
+0.917). SegFormer's lead over ResNet-34 (+0.014) is not statistically significant on 120 test images (p = 0.17).
 
-**Which model to deploy.** SegFormer (MiT-B2), on the current results. It is the most accurate model (Dice 0.917),
-it runs at 43 frames per second on a T4 GPU at batch size 1, comfortably above the 25 frames per second of live
-colonoscopy video, and it misses the fewest small polyps (7.4%, against 18.5% for the baseline). It is also the
-only model that stays above 25 frames per second with test-time augmentation (33 frames per second, Dice 0.926).
-__ (Confirm once ResNet-34 and MobileNetV2 are in: if one of them is within the confidence interval of SegFormer
-and much faster, discuss it as the alternative for weaker hardware.)
+**Which model to deploy.** All five models run above the 25 frames per second of live colonoscopy video on a T4
+GPU at batch size 1 (in fp16). The choice depends on what matters most:
+- **Where accuracy matters most: SegFormer (MiT-B2).** It is the most accurate model (Dice 0.917, 0.926 with
+  test-time augmentation), misses the fewest polyps (3 of 120) and transfers best to another hospital. It runs at
+  56.9 frames per second in fp32, its faster precision, and still at 32.8 with test-time augmentation.
+- **Where speed matters most: U-Net + ResNet-34.** It is the fastest model (109.5 frames per second in fp16, 48.7
+  with test-time augmentation), its accuracy is within the error margin of SegFormer's, it misses as few small
+  polyps (2 of 27), and it is the second most robust model on CVC-ClinicDB.
+
+We do not recommend U-Net + MobileNetV2 despite its small size (6.6 M parameters): it is not faster than
+ResNet-34 in fp16, it is significantly less accurate than SegFormer (p = 0.005), it misses more polyps (6 of 120)
+and it loses the most accuracy on images from another hospital.
 
 **Where models still fail.** Small polyps (under 5% of the image) and flat (sessile) polyps are the hardest cases
 for every model we trained, and these are exactly the polyps that doctors miss most often. For both models trained
-from scratch, every complete miss in the test set was a small polyp, most of them also sessile. SegFormer reduces
-these failures most: it misses 1 of the 18 small sessile polyps, against 4 for the baseline. A segmentation model
-can support a doctor, but it does not yet remove the need for a careful look at small, flat lesions.
+from scratch, every complete miss in the test set was a small polyp, most of them also sessile. Pretrained encoders
+reduce these failures most: ResNet-34 and SegFormer each miss 1 of the 18 small sessile polyps, against 4 for the
+baseline. They instead miss one or two large polyps that the scratch models find. A segmentation model can support
+a doctor, but it does not yet remove the need for a careful look at small, flat lesions.
 
 **Generalisation.** On CVC-ClinicDB, images from another hospital, the models trained from scratch lost about
 0.1 Dice without retraining (baseline 0.101, Attention U-Net 0.113). SegFormer lost only 0.054 and still reached
-0.863, so it also transferred best to new equipment. __ (ResNet-34 and MobileNetV2.)
+0.863, ResNet-34 lost 0.075, but MobileNetV2 lost 0.141, the most of any model. ImageNet pretraining helps a model
+transfer to new equipment, but it does not guarantee it.
 
 ## 8.2 Limitations
 - **Small test set.** 120 test images give reasonably stable overall means, but the failure-analysis groups hold
@@ -38,6 +47,7 @@ can support a doctor, but it does not yet remove the need for a careful look at 
   a higher resolution might help them. All models were trained on one hospital's images.
 - **Still images, not video.** We segment single frames. A real system would see a video stream, where the same
   polyp appears in many consecutive frames, and speed was measured on a T4 GPU rather than on hospital hardware.
+  Each model's speed was measured once, in its own Kaggle session, so small speed differences may be noise.
 
 ## 8.3 Future work
 - Train at a higher resolution, or crop around candidate regions, to help with small polyps.
