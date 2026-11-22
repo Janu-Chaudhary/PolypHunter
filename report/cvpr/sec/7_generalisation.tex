@@ -1,0 +1,68 @@
+% Source: report/sections/07_generalisation.md (owner: Manoj, #6).
+\section{Generalisation to CVC-ClinicDB}
+\label{sec:gen}
+A model that will be used in another hospital must work on images from other cameras, other lighting and other
+patients. To test this, every model trained on Kvasir-SEG was also evaluated on \textbf{CVC-ClinicDB}~\cite{bernal2015cvc}
+\textbf{without any retraining}: 612 frames from 29 colonoscopy videos recorded in Barcelona with a different
+endoscope (\cref{sec:extra-data}). The images are resized and normalised exactly like the Kvasir-SEG images, and the
+threshold is 0.5.
+
+\begin{table}[t]
+  \centering
+  \small
+  \setlength{\tabcolsep}{3pt}
+  \begin{adjustbox}{max width=\linewidth}
+  \begin{tabular}{@{}lcccc@{}}
+    \toprule
+    Model & Kvasir Dice ($n{=}120$) & CVC Dice ($n{=}612$) & CVC IoU & Drop \\
+    \midrule
+    U-Net (scratch)     & 0.851 & 0.750 & 0.655 & 0.101 \\
+    U-Net + ResNet-34   & 0.903 & 0.828 & 0.754 & 0.075 \\
+    U-Net + MobileNetV2 & 0.894 & 0.753 & 0.680 & 0.141 \\
+    Attention U-Net     & 0.854 & 0.741 & 0.646 & 0.113 \\
+    SegFormer (MiT-B2)  & 0.917 & 0.863 & 0.787 & 0.054 \\
+    \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+  \caption{Dice on the Kvasir-SEG test set and on CVC-ClinicDB, and the drop between them.}
+  \label{tab:cvc}
+\end{table}
+
+\paragraph{Models trained from scratch.} The baseline loses 0.101 Dice on the new hospital's images ($0.851 \rightarrow 0.750$, \cref{tab:cvc}). It
+still finds most polyps, but a tenth of its overlap is lost, which shows that it has partly learned features
+specific to Kvasir-SEG's camera and image style. The Attention U-Net loses slightly more (0.113) and ends up a
+little below the baseline on CVC (0.741 against 0.750): the attention gates do not make the model more robust
+to a new hospital either.
+
+\paragraph{SegFormer.} SegFormer loses only 0.054 Dice, about half as much as the two models trained from scratch, and
+keeps a Dice of 0.863 on CVC-ClinicDB. Its lead over the baseline grows from 0.066 on Kvasir-SEG to 0.113 on
+CVC-ClinicDB. Two of its properties may explain this: its encoder was pretrained on ImageNet, so it starts from
+features learned on over a million varied photographs rather than on 800 colonoscopy images; and its
+self-attention relates every part of the image to every other part, which may make it rely less on local colour
+and texture that change between cameras.
+
+\paragraph{Pretrained CNN encoders.} ResNet-34 and MobileNetV2 were also pretrained on ImageNet but are CNNs, so they help
+separate these two explanations. They do not behave alike. ResNet-34 loses 0.075 Dice and keeps 0.828 on
+CVC-ClinicDB, between the scratch models and SegFormer. MobileNetV2 loses 0.141, \textbf{the largest drop of all five
+models}: on Kvasir-SEG it was 0.043 above the baseline, on CVC-ClinicDB only 0.003. ImageNet pretraining alone
+therefore does not guarantee robustness to a new hospital. It helped the larger ResNet-34 encoder (24.4\,M
+parameters), but not the compact MobileNetV2 (6.6\,M), whose small capacity may be used up fitting Kvasir-SEG's
+own image style. SegFormer, pretrained \emph{and} attention-based, transfers best, which suggests that both pretraining
+and the transformer encoder contribute, although one seed per model and one external dataset cannot prove this.
+
+The ranking on CVC-ClinicDB is almost the same as on Kvasir-SEG: SegFormer, then ResNet-34, then the other three.
+The one change is that MobileNetV2 falls back to the level of the scratch models (0.753 against 0.750 and 0.741).
+For deployment in a hospital whose images were not seen in training, SegFormer and ResNet-34 are the safer
+choices.
+
+\paragraph{Caveats.}
+\begin{itemize}
+  \item CVC-ClinicDB frames come from only 29 videos, so neighbouring frames are very similar and the 612 frames are
+        far from 612 independent cases.
+  \item Its images are smaller ($384\times288$) than most Kvasir-SEG images and wider than they are tall. Resizing them to
+        $352\times352$ stretches them vertically and changes their apparent sharpness, so polyps look slightly different
+        from those the models were trained on.
+  \item We use no CVC image for training or for choosing anything, so these numbers are a fair test of transfer, but a
+        single seed means differences of about 0.01 (such as between the baseline, the Attention U-Net and MobileNetV2
+        on CVC) should not be over-interpreted.
+\end{itemize}
