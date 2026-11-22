@@ -1,0 +1,173 @@
+[     6.2s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     6.2s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     6.2s stderr] 0.00s - to python to disable frozen modules.
+[     6.2s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[     6.8s stderr] 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+[     6.8s stderr] 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+[     6.8s stderr] 0.00s - to python to disable frozen modules.
+[     6.8s stderr] 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+[    25.6s stdout] torch 2.11.0+cu130 | smp 0.6.0 | device Tesla T4 | SMOKE False
+[    27.2s stdout] 1000 images | train 800 | val 80 | test 120
+[    27.6s stdout] 196 sessile (flat) polyp ids found
+[   261.5s stdout] CVC-ClinicDB: 612 images from /kaggle/input/datasets/balraj98/cvcclinicdb/PNG/Original
+[   312.9s stdout] [attention_unet] ep   1/60 loss 1.3595 val dice 0.4568 iou 0.3329 (best 0.4568)
+[   365.4s stdout] [attention_unet] ep   2/60 loss 1.1734 val dice 0.4462 iou 0.3222 (best 0.4568)
+[   421.4s stdout] [attention_unet] ep   3/60 loss 1.0787 val dice 0.5032 iou 0.3690 (best 0.5032)
+[   476.1s stdout] [attention_unet] ep   4/60 loss 1.0139 val dice 0.5607 iou 0.4240 (best 0.5607)
+[   530.3s stdout] [attention_unet] ep   5/60 loss 0.9554 val dice 0.5590 iou 0.4284 (best 0.5607)
+[   585.2s stdout] [attention_unet] ep   6/60 loss 0.8965 val dice 0.5776 iou 0.4649 (best 0.5776)
+[   640.2s stdout] [attention_unet] ep   7/60 loss 0.8280 val dice 0.6289 iou 0.5213 (best 0.6289)
+[   694.8s stdout] [attention_unet] ep   8/60 loss 0.7609 val dice 0.6197 iou 0.5090 (best 0.6289)
+[   749.7s stdout] [attention_unet] ep   9/60 loss 0.7179 val dice 0.6913 iou 0.5734 (best 0.6913)
+[   804.8s stdout] [attention_unet] ep  10/60 loss 0.6605 val dice 0.7266 iou 0.6224 (best 0.7266)
+[   859.7s stdout] [attention_unet] ep  11/60 loss 0.6453 val dice 0.7353 iou 0.6305 (best 0.7353)
+[   914.4s stdout] [attention_unet] ep  12/60 loss 0.5874 val dice 0.7644 iou 0.6526 (best 0.7644)
+[   969.2s stdout] [attention_unet] ep  13/60 loss 0.5934 val dice 0.7756 iou 0.6678 (best 0.7756)
+[  1023.7s stdout] [attention_unet] ep  14/60 loss 0.5646 val dice 0.7560 iou 0.6564 (best 0.7756)
+[  1078.4s stdout] [attention_unet] ep  15/60 loss 0.5227 val dice 0.7685 iou 0.6701 (best 0.7756)
+[  1133.3s stdout] [attention_unet] ep  16/60 loss 0.5186 val dice 0.8003 iou 0.6988 (best 0.8003)
+[  1187.9s stdout] [attention_unet] ep  17/60 loss 0.5095 val dice 0.7576 iou 0.6581 (best 0.8003)
+[  1242.4s stdout] [attention_unet] ep  18/60 loss 0.5106 val dice 0.7112 iou 0.6145 (best 0.8003)
+[  1296.9s stdout] [attention_unet] ep  19/60 loss 0.4786 val dice 0.7745 iou 0.6755 (best 0.8003)
+[  1351.6s stdout] [attention_unet] ep  20/60 loss 0.4836 val dice 0.8042 iou 0.7121 (best 0.8042)
+[  1406.3s stdout] [attention_unet] ep  21/60 loss 0.4690 val dice 0.8164 iou 0.7236 (best 0.8164)
+[  1460.6s stdout] [attention_unet] ep  22/60 loss 0.4631 val dice 0.7857 iou 0.6914 (best 0.8164)
+[  1514.6s stdout] [attention_unet] ep  23/60 loss 0.4501 val dice 0.7982 iou 0.7045 (best 0.8164)
+[  1568.7s stdout] [attention_unet] ep  24/60 loss 0.4545 val dice 0.8062 iou 0.7147 (best 0.8164)
+[  1623.3s stdout] [attention_unet] ep  25/60 loss 0.4310 val dice 0.8180 iou 0.7284 (best 0.8180)
+[  1677.8s stdout] [attention_unet] ep  26/60 loss 0.4304 val dice 0.8174 iou 0.7273 (best 0.8180)
+[  1732.3s stdout] [attention_unet] ep  27/60 loss 0.4168 val dice 0.8219 iou 0.7327 (best 0.8219)
+[  1786.8s stdout] [attention_unet] ep  28/60 loss 0.4123 val dice 0.8304 iou 0.7426 (best 0.8304)
+[  1841.3s stdout] [attention_unet] ep  29/60 loss 0.3965 val dice 0.8284 iou 0.7318 (best 0.8304)
+[  1895.6s stdout] [attention_unet] ep  30/60 loss 0.4004 val dice 0.8139 iou 0.7211 (best 0.8304)
+[  1950.0s stdout] [attention_unet] ep  31/60 loss 0.3976 val dice 0.8371 iou 0.7510 (best 0.8371)
+[  2004.1s stdout] [attention_unet] ep  32/60 loss 0.3874 val dice 0.8345 iou 0.7491 (best 0.8371)
+[  2057.9s stdout] [attention_unet] ep  33/60 loss 0.3767 val dice 0.8279 iou 0.7387 (best 0.8371)
+[  2111.9s stdout] [attention_unet] ep  34/60 loss 0.3724 val dice 0.8240 iou 0.7356 (best 0.8371)
+[  2165.9s stdout] [attention_unet] ep  35/60 loss 0.3539 val dice 0.8364 iou 0.7489 (best 0.8371)
+[  2219.8s stdout] [attention_unet] ep  36/60 loss 0.3595 val dice 0.8196 iou 0.7271 (best 0.8371)
+[  2274.0s stdout] [attention_unet] ep  37/60 loss 0.3533 val dice 0.8364 iou 0.7497 (best 0.8371)
+[  2328.4s stdout] [attention_unet] ep  38/60 loss 0.3378 val dice 0.8242 iou 0.7382 (best 0.8371)
+[  2383.1s stdout] [attention_unet] ep  39/60 loss 0.3422 val dice 0.8451 iou 0.7629 (best 0.8451)
+[  2437.8s stdout] [attention_unet] ep  40/60 loss 0.3412 val dice 0.8379 iou 0.7577 (best 0.8451)
+[  2492.9s stdout] [attention_unet] ep  41/60 loss 0.3277 val dice 0.8484 iou 0.7653 (best 0.8484)
+[  2547.5s stdout] [attention_unet] ep  42/60 loss 0.3130 val dice 0.8445 iou 0.7622 (best 0.8484)
+[  2602.1s stdout] [attention_unet] ep  43/60 loss 0.3144 val dice 0.8345 iou 0.7495 (best 0.8484)
+[  2656.6s stdout] [attention_unet] ep  44/60 loss 0.3083 val dice 0.8456 iou 0.7613 (best 0.8484)
+[  2711.2s stdout] [attention_unet] ep  45/60 loss 0.3041 val dice 0.8420 iou 0.7580 (best 0.8484)
+[  2765.8s stdout] [attention_unet] ep  46/60 loss 0.3102 val dice 0.8449 iou 0.7651 (best 0.8484)
+[  2820.7s stdout] [attention_unet] ep  47/60 loss 0.2929 val dice 0.8586 iou 0.7815 (best 0.8586)
+[  2875.6s stdout] [attention_unet] ep  48/60 loss 0.2849 val dice 0.8565 iou 0.7778 (best 0.8586)
+[  2930.4s stdout] [attention_unet] ep  49/60 loss 0.2778 val dice 0.8488 iou 0.7704 (best 0.8586)
+[  2985.1s stdout] [attention_unet] ep  50/60 loss 0.2693 val dice 0.8491 iou 0.7709 (best 0.8586)
+[  3039.6s stdout] [attention_unet] ep  51/60 loss 0.2687 val dice 0.8499 iou 0.7718 (best 0.8586)
+[  3094.1s stdout] [attention_unet] ep  52/60 loss 0.2724 val dice 0.8556 iou 0.7790 (best 0.8586)
+[  3148.7s stdout] [attention_unet] ep  53/60 loss 0.2631 val dice 0.8553 iou 0.7786 (best 0.8586)
+[  3203.3s stdout] [attention_unet] ep  54/60 loss 0.2655 val dice 0.8559 iou 0.7809 (best 0.8586)
+[  3258.1s stdout] [attention_unet] ep  55/60 loss 0.2607 val dice 0.8545 iou 0.7787 (best 0.8586)
+[  3312.8s stdout] [attention_unet] ep  56/60 loss 0.2521 val dice 0.8526 iou 0.7765 (best 0.8586)
+[  3367.4s stdout] [attention_unet] ep  57/60 loss 0.2547 val dice 0.8535 iou 0.7773 (best 0.8586)
+[  3422.2s stdout] [attention_unet] ep  58/60 loss 0.2496 val dice 0.8525 iou 0.7757 (best 0.8586)
+[  3477.0s stdout] [attention_unet] ep  59/60 loss 0.2509 val dice 0.8531 iou 0.7767 (best 0.8586)
+[  3532.0s stdout] [attention_unet] ep  60/60 loss 0.2574 val dice 0.8539 iou 0.7779 (best 0.8586)
+[  3532.0s stdout] [attention_unet] done in 54.5 min
+[  3609.5s stdout] {
+[  3609.5s stdout]  "model": "attention_unet",
+[  3609.5s stdout]  "dice": 0.8536,
+[  3609.5s stdout]  "iou": 0.7745,
+[  3609.5s stdout]  "precision": 0.8684,
+[  3609.5s stdout]  "recall": 0.8951,
+[  3609.5s stdout]  "thr_val": 0.55,
+[  3609.5s stdout]  "dice_tuned": 0.8543,
+[  3609.5s stdout]  "iou_tuned": 0.7758,
+[  3609.5s stdout]  "dice_tta": 0.8569,
+[  3609.5s stdout]  "iou_tta": 0.7827,
+[  3609.5s stdout]  "cvc_dice": 0.741,
+[  3609.5s stdout]  "cvc_iou": 0.6463,
+[  3609.5s stdout]  "params_M": 31.3882,
+[  3609.5s stdout]  "fps_fp32": 10.6009,
+[  3609.5s stdout]  "fps_fp16": 40.7222,
+[  3609.5s stdout]  "fps_fp16_tta": 12.7323,
+[  3609.5s stdout]  "train_min": 54.4927,
+[  3609.5s stdout]  "epochs": 60,
+[  3609.5s stdout]  "lr": 0.0003,
+[  3609.5s stdout]  "gpu": "Tesla T4",
+[  3609.5s stdout]  "smoke": false
+[  3609.5s stdout] }
+[  3610.7s stderr] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[  3610.7s stderr] 
+[  3610.7s stderr] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[  3633.1s stdout] [segformer_mitb2] ep   1/40 loss 1.3743 val dice 0.6734 iou 0.5323 (best 0.6734)
+[  3652.1s stdout] [segformer_mitb2] ep   2/40 loss 0.7721 val dice 0.8202 iou 0.7184 (best 0.8202)
+[  3670.5s stdout] [segformer_mitb2] ep   3/40 loss 0.4732 val dice 0.8169 iou 0.7228 (best 0.8202)
+[  3688.9s stdout] [segformer_mitb2] ep   4/40 loss 0.3745 val dice 0.8591 iou 0.7802 (best 0.8591)
+[  3707.4s stdout] [segformer_mitb2] ep   5/40 loss 0.3310 val dice 0.8615 iou 0.7854 (best 0.8615)
+[  3726.0s stdout] [segformer_mitb2] ep   6/40 loss 0.2686 val dice 0.8900 iou 0.8239 (best 0.8900)
+[  3744.5s stdout] [segformer_mitb2] ep   7/40 loss 0.2391 val dice 0.8896 iou 0.8286 (best 0.8900)
+[  3763.1s stdout] [segformer_mitb2] ep   8/40 loss 0.2390 val dice 0.8953 iou 0.8330 (best 0.8953)
+[  3781.6s stdout] [segformer_mitb2] ep   9/40 loss 0.2150 val dice 0.8991 iou 0.8393 (best 0.8991)
+[  3800.0s stdout] [segformer_mitb2] ep  10/40 loss 0.1892 val dice 0.8862 iou 0.8239 (best 0.8991)
+[  3818.4s stdout] [segformer_mitb2] ep  11/40 loss 0.1903 val dice 0.8823 iou 0.8198 (best 0.8991)
+[  3837.0s stdout] [segformer_mitb2] ep  12/40 loss 0.1773 val dice 0.9086 iou 0.8507 (best 0.9086)
+[  3855.5s stdout] [segformer_mitb2] ep  13/40 loss 0.1822 val dice 0.8878 iou 0.8277 (best 0.9086)
+[  3873.9s stdout] [segformer_mitb2] ep  14/40 loss 0.1721 val dice 0.9052 iou 0.8484 (best 0.9086)
+[  3892.3s stdout] [segformer_mitb2] ep  15/40 loss 0.1604 val dice 0.9040 iou 0.8468 (best 0.9086)
+[  3910.8s stdout] [segformer_mitb2] ep  16/40 loss 0.1523 val dice 0.8905 iou 0.8325 (best 0.9086)
+[  3929.3s stdout] [segformer_mitb2] ep  17/40 loss 0.1467 val dice 0.9040 iou 0.8501 (best 0.9086)
+[  3947.7s stdout] [segformer_mitb2] ep  18/40 loss 0.1307 val dice 0.9042 iou 0.8486 (best 0.9086)
+[  3966.0s stdout] [segformer_mitb2] ep  19/40 loss 0.1283 val dice 0.9017 iou 0.8462 (best 0.9086)
+[  3984.4s stdout] [segformer_mitb2] ep  20/40 loss 0.1287 val dice 0.9066 iou 0.8513 (best 0.9086)
+[  4002.8s stdout] [segformer_mitb2] ep  21/40 loss 0.1231 val dice 0.9063 iou 0.8546 (best 0.9086)
+[  4021.3s stdout] [segformer_mitb2] ep  22/40 loss 0.1222 val dice 0.9072 iou 0.8520 (best 0.9086)
+[  4039.9s stdout] [segformer_mitb2] ep  23/40 loss 0.1157 val dice 0.9130 iou 0.8598 (best 0.9130)
+[  4058.3s stdout] [segformer_mitb2] ep  24/40 loss 0.1153 val dice 0.9075 iou 0.8520 (best 0.9130)
+[  4076.8s stdout] [segformer_mitb2] ep  25/40 loss 0.1290 val dice 0.9045 iou 0.8491 (best 0.9130)
+[  4095.2s stdout] [segformer_mitb2] ep  26/40 loss 0.1149 val dice 0.9055 iou 0.8527 (best 0.9130)
+[  4113.7s stdout] [segformer_mitb2] ep  27/40 loss 0.1070 val dice 0.9085 iou 0.8546 (best 0.9130)
+[  4132.1s stdout] [segformer_mitb2] ep  28/40 loss 0.1050 val dice 0.9112 iou 0.8608 (best 0.9130)
+[  4150.5s stdout] [segformer_mitb2] ep  29/40 loss 0.1004 val dice 0.9117 iou 0.8599 (best 0.9130)
+[  4168.9s stdout] [segformer_mitb2] ep  30/40 loss 0.0983 val dice 0.9130 iou 0.8613 (best 0.9130)
+[  4187.3s stdout] [segformer_mitb2] ep  31/40 loss 0.0977 val dice 0.9123 iou 0.8604 (best 0.9130)
+[  4205.7s stdout] [segformer_mitb2] ep  32/40 loss 0.0939 val dice 0.9106 iou 0.8598 (best 0.9130)
+[  4224.1s stdout] [segformer_mitb2] ep  33/40 loss 0.0945 val dice 0.9111 iou 0.8598 (best 0.9130)
+[  4242.5s stdout] [segformer_mitb2] ep  34/40 loss 0.0944 val dice 0.9120 iou 0.8609 (best 0.9130)
+[  4260.9s stdout] [segformer_mitb2] ep  35/40 loss 0.0944 val dice 0.9125 iou 0.8610 (best 0.9130)
+[  4279.4s stdout] [segformer_mitb2] ep  36/40 loss 0.0939 val dice 0.9122 iou 0.8610 (best 0.9130)
+[  4297.8s stdout] [segformer_mitb2] ep  37/40 loss 0.0920 val dice 0.9126 iou 0.8613 (best 0.9130)
+[  4316.2s stdout] [segformer_mitb2] ep  38/40 loss 0.0928 val dice 0.9129 iou 0.8614 (best 0.9130)
+[  4334.5s stdout] [segformer_mitb2] ep  39/40 loss 0.0922 val dice 0.9128 iou 0.8615 (best 0.9130)
+[  4352.9s stdout] [segformer_mitb2] ep  40/40 loss 0.0919 val dice 0.9127 iou 0.8615 (best 0.9130)
+[  4352.9s stdout] [segformer_mitb2] done in 12.3 min
+[  4386.6s stdout] {
+[  4386.6s stdout]  "model": "segformer_mitb2",
+[  4386.6s stdout]  "dice": 0.9171,
+[  4386.6s stdout]  "iou": 0.8653,
+[  4386.6s stdout]  "precision": 0.9113,
+[  4386.6s stdout]  "recall": 0.9435,
+[  4386.6s stdout]  "thr_val": 0.6,
+[  4386.6s stdout]  "dice_tuned": 0.9179,
+[  4386.6s stdout]  "iou_tuned": 0.8665,
+[  4386.6s stdout]  "dice_tta": 0.926,
+[  4386.6s stdout]  "iou_tta": 0.8745,
+[  4386.6s stdout]  "cvc_dice": 0.8627,
+[  4386.6s stdout]  "cvc_iou": 0.787,
+[  4386.6s stdout]  "params_M": 24.7224,
+[  4386.6s stdout]  "fps_fp32": 56.8833,
+[  4386.6s stdout]  "fps_fp16": 43.2808,
+[  4386.6s stdout]  "fps_fp16_tta": 32.8023,
+[  4386.6s stdout]  "train_min": 12.3114,
+[  4386.6s stdout]  "epochs": 40,
+[  4386.6s stdout]  "lr": 0.0001,
+[  4386.6s stdout]  "gpu": "Tesla T4",
+[  4386.6s stdout]  "smoke": false
+[  4386.6s stdout] }
+[  4388.8s stdout] saved /kaggle/working/figures/attention_maps.png
+[  4389.0s stdout] saved /kaggle/working/figures/threshold_curve.png
+[  4394.1s stderr] /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+[  4394.1s stderr]   cells[i][c] = re.sub('\\\\\|', '|', cell)
+[  4394.2s stderr] /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+[  4394.2s stderr]   text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[  4395.0s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+[  4395.0s stderr] [NbConvertApp] Writing 87551 bytes to __notebook__.ipynb
+[  4397.5s stderr] [NbConvertApp] Converting notebook __notebook__.ipynb to html
+[  4398.1s stderr] [NbConvertApp] Writing 463303 bytes to __results__.html
