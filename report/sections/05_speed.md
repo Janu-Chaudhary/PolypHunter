@@ -45,8 +45,10 @@ trained in this notebook; extending it to all five is an analysis-stage follow-u
 **In fp16**, all five models clear 25 FPS without TTA, from the slowest (Attention U-Net, 40.7 FPS) to the
 fastest (ResNet-34, 109.5 FPS) — at this resolution, fp16 throughput is not the bottleneck for any of them.
 **In fp32**, the picture is different: the scratch U-Net (11.6 FPS) and Attention U-Net (10.6 FPS) fall well
-short of 25 FPS, because their double-convolution blocks run at full precision get no help from tensor
-cores; only ResNet-34 (44.9), MobileNetV2 (86.5) and SegFormer (56.9) clear it in fp32.
+short of 25 FPS, because they apply full 3×3 convolutions at full resolution and through a 1024-channel
+bottleneck — far more computation per frame than the pretrained encoders, which downsample early. In fp16
+the T4's tensor cores absorb most of that cost; only ResNet-34 (44.9), MobileNetV2 (86.5) and SegFormer
+(56.9) clear 25 FPS in fp32 itself.
 
 With TTA (always timed in fp16), the scratch baseline and Attention U-Net both drop below the real-time
 threshold (14.7 and 12.7 FPS), while ResNet-34 (48.7), MobileNetV2 (63.1) and SegFormer (32.8) stay above
@@ -88,11 +90,15 @@ generalisation concern beyond raw Dice.
 
 U-Net + ResNet-34 sits between the two poles: Dice 0.903 [0.874, 0.928] (0.912 with TTA), not significantly
 different from either SegFormer (+0.014 [-0.006, 0.036], p = 0.17) or MobileNetV2 (+0.009 [-0.009, 0.027],
-p = 0.33), while reaching 48.7 FPS with TTA — 2.5× SegFormer's fp16 throughput (109.5 vs 43.3 FPS) — and
-generalising to CVC-ClinicDB far better than MobileNetV2 (drop of 0.075 vs 0.141).
+p = 0.33) on our 120 test images — with n = 120 the test has little power, so "not significant" is not the
+same claim as "the same". By speed: ResNet-34 reaches 109.5 FPS in fp16 without TTA, about 1.9× SegFormer's
+best (56.9 FPS in fp32 without TTA), or 48.7 FPS in fp16 with TTA against SegFormer's 32.8 FPS in fp16 with
+TTA (SegFormer with TTA was only measured in fp16, not fp32). ResNet-34 also generalises to CVC-ClinicDB far
+better than MobileNetV2 (drop of 0.075 vs 0.141).
 
-Our recommendation: **SegFormer, run in fp32, where accuracy is the priority**, and **U-Net + ResNet-34
-where real-time speed matters most** — it is statistically indistinguishable from SegFormer on Dice while
-being markedly faster and more robust on CVC-ClinicDB than MobileNetV2. We do not recommend MobileNetV2 for
-deployment despite its FPS headroom, given its weaker generalisation and higher miss rate. (Section 8
-carries the project-wide recommendation; it should match this comparison.)
+Our recommendation: **SegFormer, run in fp32 (56.9 FPS without TTA, 32.8 FPS in fp16 with TTA), where
+accuracy is the priority**, and **U-Net + ResNet-34, run in fp16 (109.5 FPS without TTA, 48.7 FPS with
+TTA), where real-time speed matters most** — its Dice is not significantly different from SegFormer's on
+our 120 test images (p = 0.17) while it is markedly faster and more robust on CVC-ClinicDB than MobileNetV2.
+We do not recommend MobileNetV2 for deployment despite its FPS headroom, given its weaker generalisation and
+higher miss rate. (Section 8 carries the project-wide recommendation; it should match this comparison.)

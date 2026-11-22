@@ -17,9 +17,9 @@ shortcut lets gradients flow directly through the skip path during backpropagati
 very deep encoders like this one trainable at all, and is also why its ImageNet features transfer well: the
 network can reuse early, general-purpose filters almost unchanged while later layers specialise. At
 **24.4 M parameters** it is smaller than the from-scratch baseline (31.0 M, Section 3.1) even though it is
-deeper, because its widest layers have 512 channels instead of 1024 (the baseline's 1024-channel bottleneck
-alone holds about 14 M parameters, `common.py` line 244), and the `smp` decoder (256 → 16 channels) is
-lighter than ours (512 → 64).
+deeper, because its widest layers have 512 channels instead of 1024 (the baseline's 1024-channel bottleneck,
+in the `UNet` class in `common.py`, alone holds about 14 M parameters), and the `smp` decoder (256 → 16
+channels) is lighter than ours (512 → 64).
 
 ### MobileNetV2 encoder (`unet_mobilenetv2`)
 Built with `smp.Unet("mobilenet_v2", encoder_weights="imagenet")`. MobileNetV2 replaces each standard 3×3
