@@ -19,6 +19,12 @@ measure **Dice** and **IoU**, study the **accuracy vs inference-speed trade-off*
 Extras: test-time augmentation (flips), threshold tuned on validation, cross-dataset test on CVC-ClinicDB,
 attention-gate visualisation, Kvasir-Sessile labels for flat polyps.
 
+## Report
+
+**[report/REPORT_CVPR.pdf](report/REPORT_CVPR.pdf)**: the project report in the CVPR paper template.
+Its LaTeX source is in `report/cvpr/`. Rebuild it, and the Overleaf-ready zip, with `tools/build_cvpr.sh`.
+The Markdown drafts it was written from are in `report/sections/`, and they are assembled in `report/REPORT.md`.
+
 ## Results
 
 _Filled in from `results/` after the full Kaggle run._
@@ -37,7 +43,9 @@ tools/run_on_kaggle.sh                   pushes one training notebook to your Ka
 tools/make_fake_results.py               fake results in the output format, for building the analysis early
 results/<model>/                         metrics.json, history.csv, per_image_test.csv, test_probs.npz
 figures/                                 figures used in the report
-report/sections/                         one Markdown file per report section
+report/sections/                         one Markdown file per report section (drafts)
+report/cvpr/                             the report in the CVPR template (LaTeX); built to report/REPORT_CVPR.pdf
+tools/build_cvpr.sh                      compiles the CVPR report and an Overleaf-ready zip (needs Tectonic)
 docs/WORK_PLAN.md                        roles, flow, timeline, step-by-step instructions
 ```
 
