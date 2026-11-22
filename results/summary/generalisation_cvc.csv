@@ -1,0 +1,6 @@
+,model,kvasir_dice,cvc_dice,kvasir_iou,cvc_iou,drop_dice
+unet_scratch,U-Net (scratch),0.8511,0.7499,0.7741,0.6546,0.1011
+unet_resnet34,U-Net + ResNet-34,0.903,0.828,0.8455,0.7538,0.075
+unet_mobilenetv2,U-Net + MobileNetV2,0.8938,0.7528,0.8354,0.6799,0.1409
+attention_unet,Attention U-Net,0.8536,0.741,0.7745,0.6463,0.1127
+segformer_mitb2,SegFormer (MiT-B2),0.9171,0.8627,0.8653,0.787,0.0545

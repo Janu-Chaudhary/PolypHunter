@@ -1,0 +1,6 @@
+                                model    dice     iou  precision  recall  miss_rate  thr_val  dice_tuned  dice_tta  cvc_dice  cvc_iou  params_M  fps_fp32  fps_fp16  fps_fp16_tta  train_min  ms_per_frame_fp16  realtime_fp16
+unet_scratch          U-Net (scratch)  0.8511  0.7741     0.8674  0.8971     0.0417     0.50      0.8511    0.8635    0.7499   0.6546   31.0376   11.5985   45.7366       14.7370    46.1673              21.86           True
+unet_resnet34       U-Net + ResNet-34  0.9030  0.8455     0.9189  0.9174     0.0333     0.60      0.9037    0.9118    0.8280   0.7538   24.4364   44.8707  109.5281       48.7431     9.3635               9.13           True
+unet_mobilenetv2  U-Net + MobileNetV2  0.8938  0.8354     0.9279  0.8982     0.0500     0.45      0.8939    0.9005    0.7528   0.6799    6.6289   86.5026   91.6709       63.1389     8.1791              10.91           True
+attention_unet        Attention U-Net  0.8536  0.7745     0.8684  0.8951     0.0500     0.55      0.8543    0.8569    0.7410   0.6463   31.3882   10.6009   40.7222       12.7323    54.4927              24.56           True
+segformer_mitb2    SegFormer (MiT-B2)  0.9171  0.8653     0.9113  0.9435     0.0250     0.60      0.9179    0.9260    0.8627   0.7870   24.7224   56.8833   43.2808       32.8023    12.3114              23.10           True

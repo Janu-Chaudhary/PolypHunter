@@ -1,0 +1,6 @@
+,model,dice,dice_lo,dice_hi,iou,iou_lo,iou_hi,gain_vs_baseline,gain_lo,gain_hi,p_value
+unet_scratch,U-Net (scratch),0.8511,0.816,0.8832,0.7741,0.7351,0.8113,,,,
+unet_resnet34,U-Net + ResNet-34,0.903,0.8742,0.9275,0.8455,0.8111,0.8753,0.0519,0.0279,0.0766,0.0
+unet_mobilenetv2,U-Net + MobileNetV2,0.8938,0.8619,0.9206,0.8354,0.8,0.8665,0.0427,0.0227,0.0646,0.0
+attention_unet,Attention U-Net,0.8536,0.8216,0.8825,0.7745,0.7383,0.8094,0.0026,-0.0114,0.0176,0.728
+segformer_mitb2,SegFormer (MiT-B2),0.9171,0.8932,0.9369,0.8653,0.8372,0.8899,0.0661,0.0424,0.0928,0.0

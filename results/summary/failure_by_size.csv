@@ -1,0 +1,4 @@
+size_bin,n,dice_unet_scratch,miss_unet_scratch,dice_unet_resnet34,miss_unet_resnet34,dice_unet_mobilenetv2,miss_unet_mobilenetv2,dice_attention_unet,miss_attention_unet,dice_segformer_mitb2,miss_segformer_mitb2
+small (<5%),27,0.7134,0.185,0.8514,0.074,0.8123,0.111,0.7296,0.222,0.8621,0.074
+medium (5-20%),58,0.8999,0.0,0.934,0.0,0.9341,0.017,0.9064,0.0,0.9483,0.0
+large (>20%),35,0.8764,0.0,0.8913,0.057,0.8898,0.057,0.8618,0.0,0.9079,0.029

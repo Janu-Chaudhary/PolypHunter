@@ -1,0 +1,3 @@
+morphology,n,dice_unet_scratch,miss_unet_scratch,dice_unet_resnet34,miss_unet_resnet34,dice_unet_mobilenetv2,miss_unet_mobilenetv2,dice_attention_unet,miss_attention_unet,dice_segformer_mitb2,miss_segformer_mitb2
+other,89,0.892,0.011,0.9216,0.022,0.9172,0.034,0.887,0.011,0.9345,0.011
+sessile/flat,31,0.7337,0.129,0.8496,0.065,0.8265,0.097,0.7578,0.161,0.8674,0.065
