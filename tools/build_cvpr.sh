@@ -17,7 +17,14 @@ cp figures/*.png "$OUT/figures/"            # main.tex also looks in figures/ ne
 
 # compile in a subshell inside build/cvpr; Tectonic reruns LaTeX and BibTeX until references settle
 (cd "$OUT" && tectonic --keep-logs main.tex)
-cp "$OUT/main.pdf" report/REPORT_CVPR.pdf
+# compress the figures at print quality (300 dpi) so the committed PDF stays small (6.5 MB -> 2.4 MB);
+# without Ghostscript the uncompressed PDF is copied instead
+if command -v gs >/dev/null; then
+  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dPDFSETTINGS=/printer \
+     -dDetectDuplicateImages=true -sOutputFile=report/REPORT_CVPR.pdf "$OUT/main.pdf"
+else
+  cp "$OUT/main.pdf" report/REPORT_CVPR.pdf
+fi
 
 # Zip only the LaTeX sources and figures, not the compiled output, so Overleaf builds it fresh.
 python3 - "$OUT" build/PolypHunter_CVPR_overleaf.zip <<'EOF'
